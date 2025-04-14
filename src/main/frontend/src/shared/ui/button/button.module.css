@@ -1,0 +1,42 @@
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+  animation: sparkleAnimation 0.5s ease-out forwards;
+}
+
+.fire {
+  position: absolute;
+  pointer-events: none;
+  width: 30px;
+  height: 60px;
+  background: linear-gradient(to top, #ff4d4d, #ff9933, #ffff66);
+  filter: blur(5px);
+  border-radius: 50% 50% 20% 20%;
+  animation: fireAnimation 0.7s ease-out forwards;
+}
+
+@keyframes sparkleAnimation {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes fireAnimation {
+  0% {
+    transform: scale(0.5) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5) translateY(-20px);
+    opacity: 0;
+  }
+} 

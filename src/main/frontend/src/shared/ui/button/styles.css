@@ -1,18 +1,1417 @@
-button {
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  text-decoration: none;
+  outline: none;
+  white-space: nowrap;
+  gap: 0.5rem;
 }
-button:hover {
+
+/* 버튼 크기 */
+.btn-sm {
+  padding: 0.4em 0.8em;
+  font-size: 0.875rem;
+  height: 2rem;
+}
+
+.btn-md {
+  padding: 0.6em 1.2em;
+  font-size: 1rem;
+  height: 2.5rem;
+}
+
+.btn-lg {
+  padding: 0.8em 1.6em;
+  font-size: 1.125rem;
+  height: 3rem;
+}
+
+/* 버튼 변형 스타일 */
+.btn-primary {
+  background-color: #646cff;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #535bf2;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #2a2a2a;
   border-color: #646cff;
 }
-button:focus,
-button:focus-visible {
+
+.btn-outline {
+  background-color: transparent;
+  color: #646cff;
+  border-color: #646cff;
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: rgba(100, 108, 255, 0.1);
+}
+
+.btn-text {
+  background-color: transparent;
+  color: #646cff;
+  border-color: transparent;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.btn-text:hover:not(:disabled) {
+  background-color: rgba(100, 108, 255, 0.1);
+}
+
+/* 버튼 색상 */
+.btn-color-success {
+  --btn-color: #10b981;
+  --btn-color-hover: #059669;
+  --btn-color-light: rgba(16, 185, 129, 0.1);
+}
+
+.btn-color-danger {
+  --btn-color: #ef4444;
+  --btn-color-hover: #dc2626;
+  --btn-color-light: rgba(239, 68, 68, 0.1);
+}
+
+.btn-color-warning {
+  --btn-color: #f59e0b;
+  --btn-color-hover: #d97706;
+  --btn-color-light: rgba(245, 158, 11, 0.1);
+}
+
+.btn-color-info {
+  --btn-color: #3b82f6;
+  --btn-color-hover: #2563eb;
+  --btn-color-light: rgba(59, 130, 246, 0.1);
+}
+
+/* 색상 적용 */
+.btn-primary.btn-color-success {
+  background-color: var(--btn-color);
+}
+.btn-primary.btn-color-success:hover:not(:disabled) {
+  background-color: var(--btn-color-hover);
+}
+
+.btn-primary.btn-color-danger {
+  background-color: var(--btn-color);
+}
+.btn-primary.btn-color-danger:hover:not(:disabled) {
+  background-color: var(--btn-color-hover);
+}
+
+.btn-primary.btn-color-warning {
+  background-color: var(--btn-color);
+  color: #1a1a1a;
+}
+.btn-primary.btn-color-warning:hover:not(:disabled) {
+  background-color: var(--btn-color-hover);
+}
+
+.btn-primary.btn-color-info {
+  background-color: var(--btn-color);
+}
+.btn-primary.btn-color-info:hover:not(:disabled) {
+  background-color: var(--btn-color-hover);
+}
+
+/* 아웃라인 색상 */
+.btn-outline.btn-color-success {
+  color: var(--btn-color);
+  border-color: var(--btn-color);
+}
+.btn-outline.btn-color-success:hover:not(:disabled) {
+  background-color: var(--btn-color-light);
+}
+
+.btn-outline.btn-color-danger {
+  color: var(--btn-color);
+  border-color: var(--btn-color);
+}
+.btn-outline.btn-color-danger:hover:not(:disabled) {
+  background-color: var(--btn-color-light);
+}
+
+.btn-outline.btn-color-warning {
+  color: var(--btn-color);
+  border-color: var(--btn-color);
+}
+.btn-outline.btn-color-warning:hover:not(:disabled) {
+  background-color: var(--btn-color-light);
+}
+
+.btn-outline.btn-color-info {
+  color: var(--btn-color);
+  border-color: var(--btn-color);
+}
+.btn-outline.btn-color-info:hover:not(:disabled) {
+  background-color: var(--btn-color-light);
+}
+
+/* 텍스트 색상 */
+.btn-text.btn-color-success {
+  color: var(--btn-color);
+}
+.btn-text.btn-color-success:hover:not(:disabled) {
+  background-color: var(--btn-color-light);
+}
+
+.btn-text.btn-color-danger {
+  color: var(--btn-color);
+}
+.btn-text.btn-color-danger:hover:not(:disabled) {
+  background-color: var(--btn-color-light);
+}
+
+.btn-text.btn-color-warning {
+  color: var(--btn-color);
+}
+.btn-text.btn-color-warning:hover:not(:disabled) {
+  background-color: var(--btn-color-light);
+}
+
+.btn-text.btn-color-info {
+  color: var(--btn-color);
+}
+.btn-text.btn-color-info:hover:not(:disabled) {
+  background-color: var(--btn-color-light);
+}
+
+/* 버튼 상태 */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-full-width {
+  width: 100%;
+}
+
+/* 로딩 상태 */
+.btn-loading {
+  cursor: wait;
+}
+
+.btn-spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 아이콘 스타일 */
+.btn-left-icon, .btn-right-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-left-icon {
+  margin-right: 0.25rem;
+}
+
+.btn-right-icon {
+  margin-left: 0.25rem;
+}
+
+/* 포커스 상태 */
+.btn:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* 라이트 모드 */
+@media (prefers-color-scheme: light) {
+  .btn-secondary {
+    background-color: #f9f9f9;
+    color: #213547;
+  }
+  
+  .btn-secondary:hover:not(:disabled) {
+    background-color: #e9e9e9;
+  }
+  
+  .btn-text {
+    color: #747bff;
+  }
+  
+  .btn-spinner {
+    border-color: rgba(0, 0, 0, 0.3);
+    border-top-color: #333;
+  }
+}
+
+/* Elastic 버튼 스타일 */
+.btn-elastic {
+  background-color: #8c52ff;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 0 #6a3cbf, 0 8px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+  transition: all 0.15s ease-in-out;
+  margin-bottom: 6px;
+  border: none;
+}
+
+.btn-elastic:hover:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #6a3cbf, 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic:active:not(:disabled) {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #6a3cbf, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Bouncy 버튼 스타일 */
+.btn-bouncy {
+  background-color: #ff5e7d;
+  color: white;
+  border-radius: 50px;
+  box-shadow: 0 8px 0 #d33f5c, 0 8px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+  transition: all 0.1s ease-in-out;
+  margin-bottom: 8px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-bouncy::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+  border-radius: 50px;
+}
+
+.btn-bouncy:hover:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 4px 0 #d33f5c, 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy:active:not(:disabled) {
+  transform: translateY(8px);
+  box-shadow: 0 0 0 #d33f5c, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Elastic & Bouncy 색상 적용 */
+.btn-elastic.btn-color-success {
+  background-color: #10b981;
+  box-shadow: 0 6px 0 #059669, 0 8px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-success:hover:not(:disabled) {
+  box-shadow: 0 4px 0 #059669, 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-success:active:not(:disabled) {
+  box-shadow: 0 0 0 #059669, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-danger {
+  background-color: #ef4444;
+  box-shadow: 0 6px 0 #dc2626, 0 8px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-danger:hover:not(:disabled) {
+  box-shadow: 0 4px 0 #dc2626, 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-danger:active:not(:disabled) {
+  box-shadow: 0 0 0 #dc2626, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-warning {
+  background-color: #f59e0b;
+  box-shadow: 0 6px 0 #d97706, 0 8px 10px rgba(0, 0, 0, 0.2);
+  color: #1a1a1a;
+}
+
+.btn-elastic.btn-color-warning:hover:not(:disabled) {
+  box-shadow: 0 4px 0 #d97706, 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-warning:active:not(:disabled) {
+  box-shadow: 0 0 0 #d97706, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-info {
+  background-color: #3b82f6;
+  box-shadow: 0 6px 0 #2563eb, 0 8px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-info:hover:not(:disabled) {
+  box-shadow: 0 4px 0 #2563eb, 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-elastic.btn-color-info:active:not(:disabled) {
+  box-shadow: 0 0 0 #2563eb, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-success {
+  background-color: #10b981;
+  box-shadow: 0 8px 0 #059669, 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-success:hover:not(:disabled) {
+  box-shadow: 0 4px 0 #059669, 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-success:active:not(:disabled) {
+  box-shadow: 0 0 0 #059669, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-danger {
+  background-color: #ef4444;
+  box-shadow: 0 8px 0 #dc2626, 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-danger:hover:not(:disabled) {
+  box-shadow: 0 4px 0 #dc2626, 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-danger:active:not(:disabled) {
+  box-shadow: 0 0 0 #dc2626, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-warning {
+  background-color: #f59e0b;
+  box-shadow: 0 8px 0 #d97706, 0 8px 15px rgba(0, 0, 0, 0.2);
+  color: #1a1a1a;
+}
+
+.btn-bouncy.btn-color-warning:hover:not(:disabled) {
+  box-shadow: 0 4px 0 #d97706, 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-warning:active:not(:disabled) {
+  box-shadow: 0 0 0 #d97706, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-info {
+  background-color: #3b82f6;
+  box-shadow: 0 8px 0 #2563eb, 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-info:hover:not(:disabled) {
+  box-shadow: 0 4px 0 #2563eb, 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-bouncy.btn-color-info:active:not(:disabled) {
+  box-shadow: 0 0 0 #2563eb, 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+/* 애니메이션 스타일 */
+@keyframes btn-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes btn-shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes btn-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes btn-jelly {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.1, 0.9, 1);
+  }
+  40% {
+    transform: scale3d(0.9, 1.1, 1);
+  }
+  50% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  65% {
+    transform: scale3d(0.98, 1.02, 1);
+  }
+  75% {
+    transform: scale3d(1.02, 0.98, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.btn-animation-pulse {
+  animation: btn-pulse 1.5s infinite;
+}
+
+.btn-animation-shake:hover {
+  animation: btn-shake 0.5s;
+}
+
+.btn-animation-bounce:hover {
+  animation: btn-bounce 0.8s;
+}
+
+.btn-animation-jelly:hover {
+  animation: btn-jelly 0.6s;
+  animation-fill-mode: both;
+}
+
+/* 네온 버튼 스타일 */
+.btn-neon {
+  background-color: transparent;
+  color: #5ee7df;
+  border: 2px solid #5ee7df;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 0 0 10px 0 #5ee7df, 0 0 20px 0 rgba(94, 231, 223, 0.5);
+  text-shadow: 0 0 5px #5ee7df;
+  transition: all 0.3s;
+}
+
+.btn-neon:hover:not(:disabled) {
+  color: #111;
+  text-shadow: none;
+  box-shadow: 0 0 20px 0 #5ee7df, 0 0 40px 0 rgba(94, 231, 223, 0.8);
+}
+
+.btn-neon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #5ee7df;
+  z-index: -1;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.btn-neon:hover:not(:disabled)::before {
+  transform: translateY(0);
+}
+
+/* 네온 버튼 색상 변형 */
+.btn-neon.btn-color-success {
+  color: var(--btn-color);
+  border-color: var(--btn-color);
+  box-shadow: 0 0 10px 0 var(--btn-color), 0 0 20px 0 rgba(16, 185, 129, 0.5);
+  text-shadow: 0 0 5px var(--btn-color);
+}
+
+.btn-neon.btn-color-success:hover:not(:disabled) {
+  box-shadow: 0 0 20px 0 var(--btn-color), 0 0 40px 0 rgba(16, 185, 129, 0.8);
+}
+
+.btn-neon.btn-color-success::before {
+  background-color: var(--btn-color);
+}
+
+.btn-neon.btn-color-danger {
+  color: var(--btn-color);
+  border-color: var(--btn-color);
+  box-shadow: 0 0 10px 0 var(--btn-color), 0 0 20px 0 rgba(239, 68, 68, 0.5);
+  text-shadow: 0 0 5px var(--btn-color);
+}
+
+.btn-neon.btn-color-danger:hover:not(:disabled) {
+  box-shadow: 0 0 20px 0 var(--btn-color), 0 0 40px 0 rgba(239, 68, 68, 0.8);
+}
+
+.btn-neon.btn-color-danger::before {
+  background-color: var(--btn-color);
+}
+
+.btn-neon.btn-color-warning {
+  color: var(--btn-color);
+  border-color: var(--btn-color);
+  box-shadow: 0 0 10px 0 var(--btn-color), 0 0 20px 0 rgba(245, 158, 11, 0.5);
+  text-shadow: 0 0 5px var(--btn-color);
+}
+
+.btn-neon.btn-color-warning:hover:not(:disabled) {
+  box-shadow: 0 0 20px 0 var(--btn-color), 0 0 40px 0 rgba(245, 158, 11, 0.8);
+}
+
+.btn-neon.btn-color-warning::before {
+  background-color: var(--btn-color);
+}
+
+.btn-neon.btn-color-info {
+  color: var(--btn-color);
+  border-color: var(--btn-color);
+  box-shadow: 0 0 10px 0 var(--btn-color), 0 0 20px 0 rgba(59, 130, 246, 0.5);
+  text-shadow: 0 0 5px var(--btn-color);
+}
+
+.btn-neon.btn-color-info:hover:not(:disabled) {
+  box-shadow: 0 0 20px 0 var(--btn-color), 0 0 40px 0 rgba(59, 130, 246, 0.8);
+}
+
+.btn-neon.btn-color-info::before {
+  background-color: var(--btn-color);
+}
+
+/* 버블 버튼 */
+.btn-bubble {
+  position: relative;
+  background-color: #ff3e9d;
+  color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 10px rgba(255, 62, 157, 0.3);
+}
+
+.btn-bubble:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 62, 157, 0.4);
+}
+
+.btn-bubble-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.btn-bubble-effect::before,
+.btn-bubble-effect::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  width: 40px;
+  height: 40px;
+  transition: transform 0.6s ease-out;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.btn-bubble-effect::before {
+  top: 30%;
+  left: 20%;
+}
+
+.btn-bubble-effect::after {
+  top: 70%;
+  left: 80%;
+}
+
+.btn-bubble:hover:not(:disabled) .btn-bubble-effect::before {
+  animation: bubble-rise 2s infinite;
+}
+
+.btn-bubble:hover:not(:disabled) .btn-bubble-effect::after {
+  animation: bubble-rise 2s infinite 0.2s;
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -200%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* 버블 버튼 색상 변형 */
+.btn-bubble.btn-color-success {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+.btn-bubble.btn-color-success:hover:not(:disabled) {
+  box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+}
+
+.btn-bubble.btn-color-danger {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+}
+
+.btn-bubble.btn-color-danger:hover:not(:disabled) {
+  box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
+}
+
+.btn-bubble.btn-color-warning {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
+
+.btn-bubble.btn-color-warning:hover:not(:disabled) {
+  box-shadow: 0 6px 15px rgba(245, 158, 11, 0.4);
+}
+
+.btn-bubble.btn-color-info {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+.btn-bubble.btn-color-info:hover:not(:disabled) {
+  box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* 3D 플립 버튼 */
+.btn-flip3d {
+  background-color: #6f42c1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  perspective: 1000px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s;
+  box-shadow: 0 4px 8px rgba(111, 66, 193, 0.3);
+}
+
+.btn-flip3d::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #4e2d89;
+  border-radius: 8px;
+  transform: rotateX(90deg) translateZ(1.4em);
+  transform-origin: bottom center;
+  box-shadow: 0 4px 8px rgba(111, 66, 193, 0.3);
+}
+
+.btn-flip3d:hover:not(:disabled) {
+  transform: rotateX(-90deg) translateY(1.4em);
+}
+
+/* 3D 플립 버튼 색상 변형 */
+.btn-flip3d.btn-color-success {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-flip3d.btn-color-success::before {
+  background-color: #059669;
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-flip3d.btn-color-danger {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-flip3d.btn-color-danger::before {
+  background-color: #dc2626;
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-flip3d.btn-color-warning {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+.btn-flip3d.btn-color-warning::before {
+  background-color: #d97706;
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+.btn-flip3d.btn-color-info {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.btn-flip3d.btn-color-info::before {
+  background-color: #2563eb;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* 요요 버튼 */
+.btn-yoyo {
+  background-color: #36b3a8;
+  color: white;
+  border-radius: 30px;
+  transition: all 0.3s;
+  border: none;
+  box-shadow: 0 4px 8px rgba(54, 179, 168, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-yoyo:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(54, 179, 168, 0.4);
+}
+
+.btn-yoyo:active:not(:disabled) {
+  animation: yoyo-bounce 0.4s ease-in-out;
+}
+
+@keyframes yoyo-bounce {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 요요 버튼 색상 변형 */
+.btn-yoyo.btn-color-success {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-yoyo.btn-color-success:hover:not(:disabled) {
+  box-shadow: 0 6px 12px rgba(16, 185, 129, 0.4);
+}
+
+.btn-yoyo.btn-color-danger {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-yoyo.btn-color-danger:hover:not(:disabled) {
+  box-shadow: 0 6px 12px rgba(239, 68, 68, 0.4);
+}
+
+.btn-yoyo.btn-color-warning {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+.btn-yoyo.btn-color-warning:hover:not(:disabled) {
+  box-shadow: 0 6px 12px rgba(245, 158, 11, 0.4);
+}
+
+.btn-yoyo.btn-color-info {
+  background-color: var(--btn-color);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.btn-yoyo.btn-color-info:hover:not(:disabled) {
+  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* 글리치 버튼 */
+.btn-glitch {
+  background-color: #1a1a1a;
+  color: white;
+  border: 2px solid #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+  position: relative;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.5);
+  overflow: hidden;
+}
+
+.btn-glitch::before,
+.btn-glitch::after {
+  content: attr(data-content);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: inherit;
+}
+
+.btn-glitch:hover:not(:disabled)::before {
+  animation: glitch-anim-1 0.4s linear infinite;
+  text-shadow: 1px 0 #ff00cc;
+  color: #ff00cc;
+  z-index: -1;
+}
+
+.btn-glitch:hover:not(:disabled)::after {
+  animation: glitch-anim-2 0.4s linear infinite;
+  text-shadow: -1px 0 #00ffff;
+  color: #00ffff;
+  z-index: -2;
+}
+
+@keyframes glitch-anim-1 {
+  0%, 100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+  33% {
+    transform: translate(-2px, 1px);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(2px, -1px);
+    opacity: 0.9;
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0%, 100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+  33% {
+    transform: translate(2px, -1px);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(-2px, 1px);
+    opacity: 0.9;
+  }
+}
+
+/* 애니메이션 추가 */
+
+/* 리플 애니메이션 */
+.btn-ripple-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 70%);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.btn-animation-ripple:active .btn-ripple-effect {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* 글리치 애니메이션 */
+.btn-animation-glitch {
+  position: relative;
+}
+
+.btn-animation-glitch:hover {
+  animation: none;
+}
+
+.btn-animation-glitch:hover::before {
+  content: attr(data-content);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: inherit;
+  animation: glitch-anim-1 0.4s linear infinite;
+  text-shadow: 1px 0 #ff00cc;
+  color: #ff00cc;
+  z-index: -1;
+}
+
+.btn-animation-glitch:hover::after {
+  content: attr(data-content);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: inherit;
+  animation: glitch-anim-2 0.4s linear infinite;
+  text-shadow: -1px 0 #00ffff;
+  color: #00ffff;
+  z-index: -2;
+}
+
+/* 플로팅 애니메이션 */
+.btn-animation-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* 회전 애니메이션 */
+.btn-animation-rotate {
+  transition: transform 0.3s;
+}
+
+.btn-animation-rotate:hover {
+  transform: rotate(360deg);
+}
+
+/* 콘페티 애니메이션 */
+.btn-confetti-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  transform-origin: center;
+  z-index: 10000;
+  animation: confetti-fall 1s linear forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(var(--r));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(
+      calc(-50% + var(--x) * 100px - 50px),
+      calc(-50% + var(--y) * 100px - 50px)
+    )
+    scale(1) rotate(calc(var(--r) + 360deg));
+    opacity: 0;
+  }
+}
+
+/* 폭발 버튼 */
+.btn-explode {
+  background-color: #ff3d00;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 61, 0, 0.3);
+}
+
+.btn-explode:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 61, 0, 0.5);
+}
+
+.btn-explode::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(255, 61, 0, 0.8) 0%, rgba(255, 61, 0, 0) 70%);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s;
+  z-index: -1;
+}
+
+.btn-explode:active:not(:disabled)::before {
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.2s;
+}
+
+/* 그림자 버튼 */
+.btn-shadow {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 
+    15px 15px 20px rgba(0, 0, 0, 0.2),
+    -15px -15px 20px rgba(255, 255, 255, 0.7),
+    inset 0 0 0 rgba(0, 0, 0, 0.1),
+    inset 0 0 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.btn-shadow:hover:not(:disabled) {
+  box-shadow: 
+    10px 10px 15px rgba(0, 0, 0, 0.2),
+    -10px -10px 15px rgba(255, 255, 255, 0.7),
+    inset 0 0 0 rgba(0, 0, 0, 0.1),
+    inset 0 0 0 rgba(255, 255, 255, 0.7);
+  transform: translateY(-2px);
+}
+
+.btn-shadow:active:not(:disabled) {
+  box-shadow: 
+    0 0 0 rgba(0, 0, 0, 0.2),
+    0 0 0 rgba(255, 255, 255, 0.7),
+    inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+    inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+  transform: translateY(0);
+}
+
+/* 네온글로우 버튼 */
+.btn-neonglow {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+  transition: all 0.4s ease;
+}
+
+.btn-neonglow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+  background: linear-gradient(45deg, 
+    #ff0000, #ff7300, #fffb00, #48ff00, 
+    #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background-size: 400%;
+  border-radius: 30px;
+  animation: glowing 20s linear infinite;
+  opacity: 0.3;
+  transition: opacity 0.4s;
+}
+
+.btn-neonglow:hover:not(:disabled) {
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 0 40px rgba(138, 43, 226, 0.8);
+  transform: translateY(-3px) scale(1.03);
+}
+
+.btn-neonglow:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+/* 색상 변형 */
+.btn-explode.btn-color-success {
+  background-color: var(--btn-color);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-explode.btn-color-success:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+.btn-explode.btn-color-success::before {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.8) 0%, rgba(16, 185, 129, 0) 70%);
+}
+
+.btn-explode.btn-color-danger {
+  background-color: var(--btn-color);
+  box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+}
+
+.btn-explode.btn-color-danger:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+}
+
+.btn-explode.btn-color-danger::before {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.8) 0%, rgba(239, 68, 68, 0) 70%);
+}
+
+.btn-explode.btn-color-warning {
+  background-color: var(--btn-color);
+  box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+}
+
+.btn-explode.btn-color-warning:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+}
+
+.btn-explode.btn-color-warning::before {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.8) 0%, rgba(245, 158, 11, 0) 70%);
+}
+
+.btn-explode.btn-color-info {
+  background-color: var(--btn-color);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-explode.btn-color-info:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+}
+
+.btn-explode.btn-color-info::before {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(59, 130, 246, 0) 70%);
+}
+
+/* 다크 모드에서 그림자 버튼 조정 */
+@media (prefers-color-scheme: dark) {
+  .btn-shadow {
+    background-color: #333;
+    color: #fff;
+    box-shadow: 
+      15px 15px 20px rgba(0, 0, 0, 0.5),
+      -15px -15px 20px rgba(255, 255, 255, 0.05),
+      inset 0 0 0 rgba(0, 0, 0, 0.5),
+      inset 0 0 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  .btn-shadow:hover:not(:disabled) {
+    box-shadow: 
+      10px 10px 15px rgba(0, 0, 0, 0.5),
+      -10px -10px 15px rgba(255, 255, 255, 0.05),
+      inset 0 0 0 rgba(0, 0, 0, 0.5),
+      inset 0 0 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  .btn-shadow:active:not(:disabled) {
+    box-shadow: 
+      0 0 0 rgba(0, 0, 0, 0.5),
+      0 0 0 rgba(255, 255, 255, 0.05),
+      inset 5px 5px 10px rgba(0, 0, 0, 0.5),
+      inset -5px -5px 10px rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* 새로운 애니메이션 */
+
+/* 반짝임 애니메이션 */
+.btn-animation-sparkle {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-animation-sparkle::before,
+.btn-animation-sparkle::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: white;
+  opacity: 0;
+}
+
+.btn-animation-sparkle::before {
+  top: -10%;
+  left: -10%;
+}
+
+.btn-animation-sparkle::after {
+  top: -10%;
+  right: -10%;
+}
+
+.btn-animation-sparkle:hover::before {
+  animation: sparkle-1 2s infinite;
+}
+
+.btn-animation-sparkle:hover::after {
+  animation: sparkle-2 2s 0.3s infinite;
+}
+
+@keyframes sparkle-1 {
+  0% {
+    top: -10%;
+    left: -10%;
+    opacity: 0;
+  }
+  50% {
+    top: 110%;
+    left: 110%;
+    opacity: 1;
+  }
+  100% {
+    top: 110%;
+    left: 110%;
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle-2 {
+  0% {
+    top: -10%;
+    right: -10%;
+    opacity: 0;
+  }
+  50% {
+    top: 110%;
+    right: 110%;
+    opacity: 1;
+  }
+  100% {
+    top: 110%;
+    right: 110%;
+    opacity: 0;
+  }
+}
+
+/* 파동 애니메이션 */
+.btn-animation-wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-animation-wave::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: none;
+}
+
+.btn-animation-wave:hover::before {
+  animation: wave-animation 1.5s infinite;
+}
+
+@keyframes wave-animation {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+  }
+}
+
+/* 불타는 애니메이션 */
+.btn-animation-fire {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 0.3s;
+}
+
+.btn-animation-fire::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, 
+    rgba(255, 0, 0, 0.7), 
+    rgba(255, 165, 0, 0.7),
+    rgba(255, 255, 0, 0.7));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s;
+  z-index: -1;
+  filter: blur(5px);
+}
+
+.btn-animation-fire:hover {
+  transform: translateY(-3px);
+}
+
+.btn-animation-fire:hover::before {
+  transform: scaleX(1.2);
+  animation: fire-animate 2s infinite;
+}
+
+@keyframes fire-animate {
+  0%, 100% {
+    filter: blur(5px) brightness(1);
+    height: 10px;
+  }
+  50% {
+    filter: blur(8px) brightness(1.2);
+    height: 15px;
+  }
 } 
