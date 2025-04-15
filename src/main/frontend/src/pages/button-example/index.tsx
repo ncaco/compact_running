@@ -1,6 +1,6 @@
 import { Button } from '@shared/ui/button'
 import './styles.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { ButtonVariant, ButtonColor, ButtonSize, ButtonAnimation } from '@shared/ui/button'
 
 // 버튼 데이터 타입 정의
@@ -150,10 +150,140 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '098', name: '사이버펑크 해킹', variant: 'cyberpunk', leftIcon: <span>💻</span>, category: '특이한 조합' },
   { id: '099', name: '수묵화 산수', variant: 'ink', leftIcon: <span>🏔️</span>, category: '특이한 조합' },
   { id: '100', name: '종이접기 학', variant: 'origami', leftIcon: <span>🦢</span>, category: '특이한 조합' },
+
+  // 화려한 버튼 타입 - 매직, 3D, 자석 효과 등
+  { id: '101', name: '매직', variant: 'magic', category: '화려한 버튼' },
+  { id: '102', name: '3D 라이트', variant: '3dlight', category: '화려한 버튼' },
+  { id: '103', name: '자석', variant: 'magnetic', category: '화려한 버튼' },
+  { id: '104', name: '네온 텍스트', variant: 'neontext', category: '화려한 버튼' },
+  { id: '105', name: '물', variant: 'water', category: '화려한 버튼' },
+  { id: '106', name: '레인보우', variant: 'rainbow', category: '화려한 버튼' },
+  { id: '107', name: '데이지', variant: 'daisy', category: '화려한 버튼' },
+
+  // 화려한 버튼 + 애니메이션 조합
+  { id: '108', name: '매직 별빛', variant: 'magic', animation: 'stars', category: '화려한 조합' },
+  { id: '109', name: '레인보우 파티', variant: 'rainbow', animation: 'party', category: '화려한 조합' },
+  { id: '110', name: '물 비내림', variant: 'water', animation: 'rain', category: '화려한 조합' },
+  { id: '111', name: '데이지 하트', variant: 'daisy', animation: 'hearts', category: '화려한 조합' },
+  { id: '112', name: '네온텍스트 불꽃', variant: 'neontext', animation: 'fire', category: '화려한 조합' },
+
+  // 화려한 버튼 + 색상 조합
+  { id: '113', name: '매직 성공', variant: 'magic', color: 'success', category: '화려한 조합' },
+  { id: '114', name: '레인보우 경고', variant: 'rainbow', color: 'warning', category: '화려한 조합' },
+  { id: '115', name: '자석 정보', variant: 'magnetic', color: 'info', category: '화려한 조합' },
+  { id: '116', name: '3D 위험', variant: '3dlight', color: 'danger', category: '화려한 조합' },
+
+  // 화려한 버튼 + 아이콘 조합
+  { id: '117', name: '매직 스타', variant: 'magic', leftIcon: <span>⭐</span>, category: '화려한 조합' },
+  { id: '118', name: '레인보우 하트', variant: 'rainbow', leftIcon: <span>❤️</span>, category: '화려한 조합' },
+  { id: '119', name: '물방울', variant: 'water', leftIcon: <span>💧</span>, category: '화려한 조합' },
+  { id: '120', name: '꽃밭', variant: 'daisy', leftIcon: <span>🌷</span>, rightIcon: <span>🌿</span>, category: '화려한 조합' },
+
+  // 추가 Confetti 이펙트 버튼
+  { id: '121', name: '폭발적 컨페티', animation: 'confetti-explosive', category: 'Confetti' },
+  { id: '122', name: '컨페티 대포', animation: 'confetti-cannon', category: 'Confetti' },
+  { id: '123', name: '컨페티 포퍼', animation: 'confetti-popper', category: 'Confetti' },
+  { id: '124', name: '컨페티 샤워', animation: 'confetti-shower', category: 'Confetti' },
+  { id: '125', name: '중앙 폭발', animation: 'confetti-burst', category: 'Confetti' },
+  { id: '126', name: '나선형 컨페티', animation: 'confetti-spiral', category: 'Confetti' },
+  { id: '127', name: '토네이도', animation: 'confetti-tornado', category: 'Confetti' },
+
+  // 새로운 고급 Confetti 조합
+  { id: '128', name: '매직 폭발', variant: 'magic', animation: 'confetti-explosive', category: '특별 Confetti' },
+  { id: '129', name: '레인보우 샤워', variant: 'rainbow', animation: 'confetti-shower', category: '특별 Confetti' },
+  { id: '130', name: '홀로그램 나선', variant: 'hologram', animation: 'confetti-spiral', category: '특별 Confetti' },
+  { id: '131', name: '사이버 토네이도', variant: 'cyberpunk', animation: 'confetti-tornado', category: '특별 Confetti' },
+  { id: '132', name: '글리치 버스트', variant: 'glitch', animation: 'confetti-burst', category: '특별 Confetti' },
+  { id: '133', name: '네온 대포', variant: 'neon', animation: 'confetti-cannon', category: '특별 Confetti' },
+  { id: '134', name: '유리 포퍼', variant: 'glass', animation: 'confetti-popper', category: '특별 Confetti' },
+
+  // 새로운 애니메이션 타입 버튼들
+  { id: '135', name: '네온 깜빡임', animation: 'neon-flicker', category: '특수 애니메이션' },
+  { id: '136', name: '매트릭스', animation: 'matrix', category: '특수 애니메이션' },
+  { id: '137', name: '타이핑', animation: 'typing', category: '특수 애니메이션' },
+  { id: '138', name: '부유', animation: 'levitation', category: '특수 애니메이션' },
+  { id: '139', name: '카드 뒤집기', animation: 'flip-card', category: '특수 애니메이션' },
+  { id: '140', name: '충전', animation: 'charging', category: '특수 애니메이션' },
+  { id: '141', name: '형태 변형', animation: 'morphing', category: '특수 애니메이션' },
+  { id: '142', name: '자석 효과', animation: 'magnetic-pull', category: '특수 애니메이션' },
+
+  // 새로운 애니메이션 + 버튼 타입 조합
+  { id: '143', name: '매직 타이핑', variant: 'magic', animation: 'typing', category: '특수 조합' },
+  { id: '144', name: '네온 부유', variant: 'neon', animation: 'levitation', category: '특수 조합' },
+  { id: '145', name: '홀로그램 매트릭스', variant: 'hologram', animation: 'matrix', category: '특수 조합' },
+  { id: '146', name: '사이버 깜빡임', variant: 'cyberpunk', animation: 'neon-flicker', category: '특수 조합' },
+  { id: '147', name: '레인보우 카드', variant: 'rainbow', animation: 'flip-card', category: '특수 조합' },
+  { id: '148', name: '자석 형태변형', variant: 'magnetic', animation: 'morphing', category: '특수 조합' },
+  { id: '149', name: '유리 충전', variant: 'glass', animation: 'charging', category: '특수 조합' },
+  { id: '150', name: '레트로 자석', variant: 'retro', animation: 'magnetic-pull', category: '특수 조합' },
+
+  // 특수 애니메이션 버튼
+  {
+    id: '151',
+    name: '페이드인',
+    category: '특수 애니메이션',
+    animation: 'fadeIn' as ButtonAnimation,
+    variant: 'primary',
+  },
+  {
+    id: '152',
+    name: '슬라이드업',
+    category: '특수 애니메이션',
+    animation: 'slideUp' as ButtonAnimation,
+    variant: 'primary',
+  },
+  {
+    id: '153',
+    name: '진동',
+    category: '특수 애니메이션',
+    animation: 'vibrate' as ButtonAnimation,
+    variant: 'primary',
+  },
+  {
+    id: '154',
+    name: '확대',
+    category: '특수 애니메이션',
+    animation: 'scale' as ButtonAnimation,
+    variant: 'primary',
+  },
+  
+  // 특수 조합 버튼
+  {
+    id: '201',
+    name: '로딩+아이콘',
+    category: '특수 조합',
+    variant: 'primary',
+    leftIcon: <span>⭐</span>,
+    isLoading: true,
+  },
+  {
+    id: '202',
+    name: '큰+애니메이션',
+    category: '특수 조합',
+    variant: 'secondary',
+    size: 'lg',
+    animation: 'fadeIn' as ButtonAnimation,
+  },
+  {
+    id: '203',
+    name: '경고+진동',
+    category: '특수 조합',
+    variant: 'primary',
+    animation: 'vibrate' as ButtonAnimation,
+    color: 'warning',
+  },
+  {
+    id: '204',
+    name: '팝업+확대',
+    category: '특수 조합',
+    variant: 'primary',
+    animation: 'scale' as ButtonAnimation,
+    color: 'info',
+  },
 ];
 
 export const ButtonExamplePage = () => {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string>('전체');
   const [searchTerm, setSearchTerm] = useState('');
   
   useEffect(() => {
@@ -177,23 +307,48 @@ export const ButtonExamplePage = () => {
     });
   }, []);
   
-  // 버튼 필터링
-  const filteredButtons = BUTTON_DATA.filter(button => {
-    // 카테고리 필터
-    if (activeCategory && button.category !== activeCategory) {
-      return false;
+  const categories = useMemo(() => [
+    '전체',
+    '기본 타입',
+    '특수 타입',
+    '색상 타입',
+    '크기 타입',
+    '애니메이션',
+    'Confetti',
+    '아이콘',
+    '상태',
+    '조합',
+    '특별',
+    '특별 Confetti',
+    '특이한 버튼',
+    '특이한 조합',
+    '화려한 버튼',
+    '화려한 조합',
+    '특수 애니메이션',
+    '특수 조합',
+  ], []);
+
+  const buttonInfos = useMemo(() => {
+    let filteredButtons = BUTTON_DATA;
+    
+    // 카테고리 필터링
+    if (activeFilter !== '전체') {
+      filteredButtons = filteredButtons.filter(button => button.category === activeFilter);
     }
     
-    // 검색어 필터
-    if (searchTerm && !button.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return false;
+    // 검색어 필터링
+    if (searchTerm.trim() !== '') {
+      filteredButtons = filteredButtons.filter(button => 
+        button.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
     
-    return true;
-  });
-  
-  // 카테고리 목록 생성
-  const categories = Array.from(new Set(BUTTON_DATA.map(button => button.category)));
+    return filteredButtons;
+  }, [activeFilter, searchTerm]);
+
+  const handleFilterClick = useCallback((filter: string) => {
+    setActiveFilter(filter);
+  }, []);
 
   return (
     <div className="button-example-page">
@@ -213,17 +368,11 @@ export const ButtonExamplePage = () => {
         <div className="filter-section">
           <h3>카테고리</h3>
           <div className="filter-controls">
-            <span 
-              className={`filter-tag ${activeCategory === null ? 'active' : ''}`} 
-              onClick={() => setActiveCategory(null)}
-            >
-              전체
-            </span>
             {categories.map(category => (
               <span 
                 key={category} 
-                className={`filter-tag ${activeCategory === category ? 'active' : ''}`}
-                onClick={() => setActiveCategory(category)}
+                className={`filter-tag ${activeFilter === category ? 'active' : ''}`}
+                onClick={() => handleFilterClick(category)}
                 data-category={category}
               >
                 {category}
@@ -235,7 +384,7 @@ export const ButtonExamplePage = () => {
       
       {/* 메인 버튼 그리드 */}
       <div className="button-grid">
-        {filteredButtons.map(button => (
+        {buttonInfos.map(button => (
           <div 
             key={button.id} 
             className="button-item"

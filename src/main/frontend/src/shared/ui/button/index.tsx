@@ -27,7 +27,14 @@ export type ButtonVariant =
   | 'glass'
   | 'cyberpunk'
   | 'stitched'
-  | 'origami';
+  | 'origami'
+  | 'magic'
+  | '3dlight'
+  | 'magnetic'
+  | 'neontext'
+  | 'water'
+  | 'rainbow'
+  | 'daisy';
 
 export type ButtonSize = 'sm' | 'md' | 'lg'
 export type ButtonColor = 'default' | 'success' | 'danger' | 'warning' | 'info'
@@ -50,7 +57,22 @@ export type ButtonAnimation =
   | 'stars'
   | 'hearts'
   | 'rain'
-  | 'party';
+  | 'party'
+  | 'confetti-explosive'
+  | 'confetti-cannon'
+  | 'confetti-popper'
+  | 'confetti-shower'
+  | 'confetti-burst'
+  | 'confetti-spiral'
+  | 'confetti-tornado'
+  | 'neon-flicker'
+  | 'matrix'
+  | 'typing'
+  | 'levitation'
+  | 'flip-card'
+  | 'charging'
+  | 'morphing'
+  | 'magnetic-pull';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -242,6 +264,188 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
       };
       
       frame();
+    } else if (animation === 'confetti-explosive') {
+      const count = 200;
+      const defaults = {
+        origin: { y: 0.7 },
+        zIndex: 2000
+      };
+
+      function fire(particleRatio: number, opts: Record<string, unknown>) {
+        confetti({
+          ...defaults,
+          ...opts,
+          particleCount: Math.floor(count * particleRatio)
+        });
+      }
+
+      fire(0.25, {
+        spread: 26,
+        startVelocity: 55,
+      });
+      fire(0.2, {
+        spread: 60,
+      });
+      fire(0.35, {
+        spread: 100,
+        decay: 0.91,
+        scalar: 0.8
+      });
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 25,
+        decay: 0.92,
+        scalar: 1.2
+      });
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 45,
+      });
+    } else if (animation === 'confetti-cannon') {
+      const end = Date.now() + 5000;
+
+      const cannon = { x: 0.5, y: 0.8 };
+      const angle = 80;
+
+      const frame = () => {
+        confetti({
+          particleCount: 3,
+          angle: angle,
+          spread: 15,
+          origin: cannon,
+          startVelocity: 60,
+          colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'],
+          ticks: 300,
+          shapes: ['square', 'circle'],
+          scalar: 1,
+        });
+        
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      };
+      
+      frame();
+    } else if (animation === 'confetti-popper') {
+      const defaults = { 
+        startVelocity: 40, 
+        spread: 40, 
+        ticks: 80, 
+        zIndex: 0,
+        particleCount: 60,
+        origin: { y: 0.8, x: 0.5 },
+      };
+
+      const pop = () => {
+        confetti({
+          ...defaults,
+          angle: 135,
+          particleCount: 30,
+          spread: 30,
+        });
+        confetti({
+          ...defaults,
+          angle: 45,
+          particleCount: 30,
+          spread: 30,
+        });
+      };
+
+      pop();
+      setTimeout(pop, 150);
+      setTimeout(pop, 300);
+    } else if (animation === 'confetti-shower') {
+      const end = Date.now() + 3000;
+      
+      const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+      
+      (function frame() {
+        confetti({
+          particleCount: 3,
+          startVelocity: 0,
+          ticks: 300,
+          origin: { x: Math.random(), y: 0 },
+          colors: [colors[Math.floor(Math.random() * colors.length)]],
+          shapes: ['circle', 'square'],
+          gravity: 0.8,
+          scalar: 2,
+        });
+        
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    } else if (animation === 'confetti-burst') {
+      const count = 300;
+      const origin = { x: 0.5, y: 0.5 };
+      
+      confetti({
+        particleCount: count,
+        spread: 360,
+        startVelocity: 45,
+        origin,
+        colors: ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4'],
+        ticks: 200,
+        shapes: ['square', 'circle'],
+        gravity: 0.5,
+        scalar: 0.8,
+        disableForReducedMotion: true
+      });
+    } else if (animation === 'confetti-spiral') {
+      const frameCount = 30;
+      const end = Date.now() + 3000;
+      let frame = 0;
+      
+      function nextFrame() {
+        const angle = frame * 0.15;
+        const radius = Math.min(window.innerWidth, window.innerHeight) * 0.002 * frame;
+        const x = 0.5 + Math.cos(angle) * radius;
+        const y = 0.5 + Math.sin(angle) * radius;
+        
+        confetti({
+          particleCount: 5,
+          startVelocity: 10,
+          spread: 30,
+          origin: { x, y },
+          colors: ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42'],
+          ticks: 200,
+          gravity: 0.5,
+          scalar: 1.2,
+        });
+        
+        frame = (frame + 1) % frameCount;
+        
+        if (Date.now() < end) {
+          requestAnimationFrame(nextFrame);
+        }
+      }
+      
+      nextFrame();
+    } else if (animation === 'confetti-tornado') {
+      const end = Date.now() + 3000;
+      const colors = ['#ff577f', '#ff884b', '#ffd384', '#fff9b0'];
+      
+      (function frame() {
+        confetti({
+          particleCount: 4,
+          startVelocity: 20 + Math.random() * 20,
+          angle: Math.random() * 360,
+          spread: 25 + Math.random() * 30,
+          origin: {
+            x: 0.5,
+            y: Math.random() - 0.2
+          },
+          colors: [colors[Math.floor(Math.random() * colors.length)]],
+          ticks: 150,
+          shapes: ['square'],
+          scalar: 1.5,
+          zIndex: 1000,
+        });
+        
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
     } else if (animation === 'sparkle') {
       const button = e.currentTarget;
       const sparkle = document.createElement('div');

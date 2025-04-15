@@ -510,4 +510,243 @@ h1:after {
 .button-item[data-category='특이한 조합'] .button-canvas {
   background: linear-gradient(135deg, rgba(142, 68, 173, 0.1), rgba(44, 62, 80, 0.1));
   border: 1px solid rgba(142, 68, 173, 0.3);
+}
+
+/* 화려한 버튼 카테고리 스타일 */
+.filter-tag[data-category="화려한 버튼"],
+.filter-tag[data-category="화려한 조합"] {
+  background: linear-gradient(90deg, #ff00cc, #3393ff);
+  color: white;
+  border: none;
+  box-shadow: 0 0 10px rgba(255, 0, 204, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.filter-tag[data-category="화려한 버튼"]::before,
+.filter-tag[data-category="화려한 조합"]::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(90deg, #ff00cc, #3393ff);
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.filter-tag[data-category="화려한 버튼"]:hover,
+.filter-tag[data-category="화려한 조합"]:hover,
+.filter-tag[data-category="화려한 버튼"].active,
+.filter-tag[data-category="화려한 조합"].active {
+  background: linear-gradient(90deg, #ff00cc, #3393ff, #ff00cc);
+  background-size: 200% 100%;
+  animation: shiny-bg 2s linear infinite;
+  box-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+  transform: translateY(-1px);
+}
+
+.filter-tag[data-category="화려한 버튼"]:hover::before,
+.filter-tag[data-category="화려한 조합"]:hover::before,
+.filter-tag[data-category="화려한 버튼"].active::before,
+.filter-tag[data-category="화려한 조합"].active::before {
+  opacity: 0.6;
+}
+
+@keyframes shiny-bg {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* 버튼 아이템 스타일 */
+.button-item[data-category="화려한 버튼"],
+.button-item[data-category="화려한 조합"] {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.button-item[data-category="화려한 버튼"]::before,
+.button-item[data-category="화려한 조합"]::before {
+  content: "✨";
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 1.2rem;
+  background: linear-gradient(45deg, #ff00cc, #3393ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  z-index: 3;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+}
+
+.button-item[data-category="화려한 버튼"]::after,
+.button-item[data-category="화려한 조합"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 0, 204, 0.15), rgba(51, 147, 255, 0.15));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.button-item[data-category="화려한 버튼"]:hover,
+.button-item[data-category="화려한 조합"]:hover {
+  transform: translateY(-10px) scale(1.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.button-item[data-category="화려한 버튼"]:hover::after,
+.button-item[data-category="화려한 조합"]:hover::after {
+  opacity: 1;
+}
+
+.button-item[data-category="화려한 버튼"] .button-name,
+.button-item[data-category="화려한 조합"] .button-name {
+  background: linear-gradient(90deg, #ff00cc, #3393ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.button-item[data-category="화려한 버튼"] .button-category,
+.button-item[data-category="화려한 조합"] .button-category {
+  background: linear-gradient(90deg, #ff00cc, #3393ff);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 특수 애니메이션 카테고리 스타일 */
+.filter-tag[data-category="특수 애니메이션"],
+.filter-tag[data-category="특수 조합"] {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(106, 17, 203, 0.4);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.filter-tag[data-category="특수 애니메이션"]::before,
+.filter-tag[data-category="특수 조합"]::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #6a11cb, #2575fc, #6a11cb);
+  background-size: 200% 200%;
+  animation: flow-animation 3s linear infinite;
+  z-index: -1;
+  filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+@keyframes flow-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.filter-tag[data-category="특수 애니메이션"]:hover,
+.filter-tag[data-category="특수 조합"]:hover,
+.filter-tag[data-category="특수 애니메이션"].active,
+.filter-tag[data-category="특수 조합"].active {
+  box-shadow: 0 0 15px rgba(106, 17, 203, 0.6);
+  transform: translateY(-1px) scale(1.05);
+}
+
+.filter-tag[data-category="특수 애니메이션"]:hover::before,
+.filter-tag[data-category="특수 조합"]:hover::before,
+.filter-tag[data-category="특수 애니메이션"].active::before,
+.filter-tag[data-category="특수 조합"].active::before {
+  opacity: 0.6;
+}
+
+/* 버튼 아이템 스타일 */
+.button-item[data-category="특수 애니메이션"],
+.button-item[data-category="특수 조합"] {
+  background: linear-gradient(135deg, rgba(106, 17, 203, 0.05), rgba(37, 117, 252, 0.05));
+  border: 1px solid rgba(106, 17, 203, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.button-item[data-category="특수 애니메이션"]::before,
+.button-item[data-category="특수 조합"]::before {
+  content: "✨";
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 1.2rem;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  z-index: 3;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+}
+
+.button-item[data-category="특수 애니메이션"] .button-canvas,
+.button-item[data-category="특수 조합"] .button-canvas {
+  transform: scale(0.95);
+  transition: all 0.5s;
+}
+
+.button-item[data-category="특수 애니메이션"]:hover .button-canvas,
+.button-item[data-category="특수 조합"]:hover .button-canvas {
+  transform: scale(1);
+  box-shadow: 0 0 15px rgba(106, 17, 203, 0.4);
+}
+
+.button-item[data-category="특수 애니메이션"]:hover,
+.button-item[data-category="특수 조합"]:hover {
+  transform: translateY(-10px) scale(1.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, rgba(106, 17, 203, 0.1), rgba(37, 117, 252, 0.1));
+}
+
+.button-item[data-category="특수 애니메이션"] .button-name,
+.button-item[data-category="특수 조합"] .button-name {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.button-item[data-category="특수 애니메이션"] .button-category,
+.button-item[data-category="특수 조합"] .button-category {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 } 
