@@ -8,6 +8,7 @@ export type ButtonVariant =
   | 'primary' 
   | 'secondary' 
   | 'outline' 
+  | 'text'
   | 'neon' 
   | 'bubble' 
   | 'flip3d' 
@@ -15,11 +16,23 @@ export type ButtonVariant =
   | 'glitch' 
   | 'explode'
   | 'shadow'
-  | 'neonglow';
+  | 'neonglow'
+  | 'elastic'
+  | 'bouncy'
+  | 'retro'
+  | 'pixel'
+  | 'hologram'
+  | 'ink'
+  | 'mechanical'
+  | 'glass'
+  | 'cyberpunk'
+  | 'stitched'
+  | 'origami';
 
 export type ButtonSize = 'sm' | 'md' | 'lg'
 export type ButtonColor = 'default' | 'success' | 'danger' | 'warning' | 'info'
 export type ButtonAnimation = 
+  | 'none'
   | 'ripple' 
   | 'glitch' 
   | 'float' 
@@ -27,7 +40,17 @@ export type ButtonAnimation =
   | 'confetti'
   | 'sparkle'
   | 'wave'
-  | 'fire';
+  | 'fire'
+  | 'pulse'
+  | 'shake'
+  | 'bounce'
+  | 'jelly'
+  | 'fireworks'
+  | 'snow'
+  | 'stars'
+  | 'hearts'
+  | 'rain'
+  | 'party';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -110,8 +133,116 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         spread: 70,
         origin: { y: 0.6 }
       });
+    } else if (animation === 'party') {
+      const end = Date.now() + 1000;
+      
+      const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+      
+      const frame = () => {
+        confetti({
+          particleCount: 5,
+          angle: Math.random() * 360,
+          spread: 80,
+          origin: { x: Math.random(), y: Math.random() * 0.4 + 0.3 },
+          colors: colors,
+        });
+        
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      };
+      
+      frame();
+    } else if (animation === 'fireworks') {
+      const duration = 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+      
+      function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+      }
+      
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+        
+        const particleCount = 50 * (timeLeft / duration);
+        
+        confetti(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.2, 0.3), y: Math.random() - 0.2 }
+        }));
+        
+        confetti(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.7, 0.8), y: Math.random() - 0.2 }
+        }));
+        
+      }, 250);
+    } else if (animation === 'snow') {
+      const duration = 1500;
+      const animationEnd = Date.now() + duration;
+      
+      const frame = () => {
+        confetti({
+          particleCount: 1,
+          startVelocity: 0,
+          ticks: 300,
+          origin: { x: Math.random(), y: -0.1 },
+          colors: ['#ffffff'],
+          shapes: ['circle'],
+          gravity: 0.2,
+          scalar: 1,
+        });
+        
+        if (Date.now() < animationEnd) {
+          requestAnimationFrame(frame);
+        }
+      };
+      
+      frame();
+    } else if (animation === 'stars') {
+      confetti({
+        particleCount: 50,
+        spread: 90,
+        origin: { y: 0.6 },
+        shapes: ['square'],
+        colors: ['#FFD700', '#FFA500', '#FF6347'],
+      });
+    } else if (animation === 'hearts') {
+      confetti({
+        particleCount: 40,
+        spread: 70,
+        origin: { y: 0.6 },
+        shapes: ['square'],
+        colors: ['#FF69B4', '#FF1493', '#C71585'],
+      });
+    } else if (animation === 'rain') {
+      const duration = 1500;
+      const animationEnd = Date.now() + duration;
+      
+      const frame = () => {
+        confetti({
+          particleCount: 2,
+          startVelocity: 25,
+          ticks: 150,
+          origin: { x: Math.random(), y: -0.1 },
+          colors: ['#1E90FF', '#00BFFF', '#ADD8E6'],
+          shapes: ['circle'],
+          gravity: 1.2,
+          scalar: 0.7,
+        });
+        
+        if (Date.now() < animationEnd) {
+          requestAnimationFrame(frame);
+        }
+      };
+      
+      frame();
     } else if (animation === 'sparkle') {
-      // 반짝임 애니메이션 구현
       const button = e.currentTarget;
       const sparkle = document.createElement('div');
       sparkle.className = styles.sparkle;
@@ -121,7 +252,6 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         button.removeChild(sparkle);
       }, 500);
     } else if (animation === 'fire') {
-      // 불꽃 애니메이션 구현
       const button = e.currentTarget;
       const fireEffect = document.createElement('div');
       fireEffect.className = styles.fire;

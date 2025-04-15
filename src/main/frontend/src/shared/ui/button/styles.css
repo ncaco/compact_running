@@ -1414,4 +1414,344 @@
     filter: blur(8px) brightness(1.2);
     height: 15px;
   }
+}
+
+/* 더 특이한 버튼 스타일 */
+
+/* 레트로 버튼 */
+.btn-retro {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  background-color: #222;
+  color: #33ff33;
+  border: 4px solid #33ff33;
+  border-radius: 0;
+  box-shadow: 0 4px 0 #1a661a, 0 0 10px rgba(51, 255, 51, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.8em;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.btn-retro:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background-color: #33ff33;
+  animation: retro-scan 2s infinite linear;
+}
+
+@keyframes retro-scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.btn-retro:hover:not(:disabled) {
+  background-color: #111;
+  box-shadow: 0 4px 0 #1a661a, 0 0 20px rgba(51, 255, 51, 0.8);
+  text-shadow: 0 0 5px #33ff33;
+}
+
+.btn-retro:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #1a661a, 0 0 20px rgba(51, 255, 51, 0.8);
+}
+
+/* 픽셀 버튼 */
+.btn-pixel {
+  background-color: #7d61ef;
+  color: white;
+  border: none;
+  position: relative;
+  image-rendering: pixelated;
+  transition: all 0.1s;
+  border-radius: 0;
+  box-shadow: 
+    3px 0 0 0 #50308f,
+    0 3px 0 0 #50308f,
+    3px 3px 0 0 #50308f,
+    inset -3px -3px 0 0 #b39dff;
+}
+
+.btn-pixel:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.btn-pixel:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 
+    2px 0 0 0 #50308f,
+    0 2px 0 0 #50308f,
+    2px 2px 0 0 #50308f,
+    inset -2px -2px 0 0 #b39dff;
+}
+
+/* 홀로그램 버튼 */
+.btn-hologram {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #88dfff;
+  border: 1px solid rgba(136, 223, 255, 0.5);
+  box-shadow: 0 0 15px rgba(136, 223, 255, 0.5);
+  backdrop-filter: blur(2px);
+  text-shadow: 0 0 5px #88dfff;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-hologram:before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: hologram-shine 5s infinite linear;
+  z-index: -1;
+}
+
+@keyframes hologram-shine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.btn-hologram:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(136, 223, 255, 0.7);
+}
+
+.btn-hologram:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #88dfff, transparent);
+  animation: hologram-scanline 2s infinite linear;
+}
+
+@keyframes hologram-scanline {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+/* 수묵화 버튼 */
+.btn-ink {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s;
+}
+
+.btn-ink:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 0;
+  height: 100%;
+  background: #000;
+  transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: -1;
+}
+
+.btn-ink:hover:not(:disabled):before {
+  width: 120%;
+}
+
+.btn-ink:hover:not(:disabled) {
+  color: white;
+}
+
+.btn-ink:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -10%;
+  width: 0px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  filter: blur(5px);
+  transition: width 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: -2;
+}
+
+.btn-ink:hover:not(:disabled):after {
+  width: 120%;
+}
+
+/* 기계식 버튼 */
+.btn-mechanical {
+  background: linear-gradient(to bottom, #646464 0%, #333333 100%);
+  color: #eee;
+  border: 1px solid #111;
+  border-radius: 4px;
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.2) inset,
+    0 3px 0 #111;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);
+  transition: all 0.1s;
+  position: relative;
+}
+
+.btn-mechanical:hover:not(:disabled) {
+  background: linear-gradient(to bottom, #7a7a7a 0%, #444444 100%);
+}
+
+.btn-mechanical:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.2) inset,
+    0 0 0 #111;
+}
+
+/* 유리 버튼 */
+.btn-glass {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glass:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.btn-glass:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 사이버펑크 버튼 */
+.btn-cyberpunk {
+  background-color: #ff2a6d;
+  color: #05d9e8;
+  border: none;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 42, 109, 0.5);
+  text-shadow: 2px 2px 0 #000, -2px -2px 0 #000;
+  clip-path: polygon(0 0, 100% 0, 92% 100%, 8% 100%);
+}
+
+.btn-cyberpunk:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, #ff2a6d, #05d9e8, #d1f7ff, #005678);
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: cyberpunk-gradient 3s ease infinite;
+}
+
+@keyframes cyberpunk-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.btn-cyberpunk:hover:not(:disabled) {
+  box-shadow: 0 0 20px rgba(255, 42, 109, 0.8), 0 0 30px rgba(5, 217, 232, 0.6);
+}
+
+.btn-cyberpunk:after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 스티치 버튼 */
+.btn-stitched {
+  background-color: #fefefe;
+  color: #333;
+  border: 2px dashed #6c5ce7;
+  border-radius: 6px;
+  position: relative;
+  box-shadow: 0 0 0 4px #fefefe, 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-stitched:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: repeating-linear-gradient(to right, transparent, transparent 5px, #6c5ce7 5px, #6c5ce7 7px);
+}
+
+.btn-stitched:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #8c7ae6;
+}
+
+/* 종이접기 버튼 */
+.btn-origami {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.btn-origami:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 20px 20px 0;
+  border-color: transparent #ddd transparent transparent;
+  transition: all 0.3s;
+}
+
+.btn-origami:hover:not(:disabled) {
+  transform: perspective(500px) rotateX(10deg);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-origami:hover:not(:disabled):before {
+  border-width: 0 30px 30px 0;
+  border-color: transparent #bbb transparent transparent;
 } 
