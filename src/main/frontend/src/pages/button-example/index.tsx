@@ -2,6 +2,7 @@ import { Button } from '@shared/ui/button'
 import './styles.css'
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { ButtonVariant, ButtonColor, ButtonSize, ButtonAnimation } from '@shared/ui/button'
+import { LottieSparkleButton, LottieConfettiButton, LottiePulseButton, LottieHeartButton, LottieLoadingButton, LottieCelebrationButton, ParticleButton, WaveButton } from '../../components/Buttons'
 
 // 버튼 데이터 타입 정의
 interface ButtonData {
@@ -17,6 +18,7 @@ interface ButtonData {
   isLoading?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
+  render?: (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => React.ReactNode;
 }
 
 // 버튼 데이터 정의
@@ -280,6 +282,58 @@ const BUTTON_DATA: ButtonData[] = [
     animation: 'scale' as ButtonAnimation,
     color: 'info',
   },
+
+  // Lottie 애니메이션 버튼
+  { 
+    id: '205', 
+    name: 'Lottie 반짝임', 
+    category: 'Lottie 애니메이션',
+    render: (props) => <LottieSparkleButton {...props}>반짝임</LottieSparkleButton>
+  },
+  { 
+    id: '206', 
+    name: 'Lottie 컨페티', 
+    category: 'Lottie 애니메이션',
+    render: (props) => <LottieConfettiButton {...props}>축하</LottieConfettiButton>
+  },
+  { 
+    id: '207', 
+    name: 'Lottie 펄스', 
+    category: 'Lottie 애니메이션',
+    render: (props) => <LottiePulseButton {...props}>펄스</LottiePulseButton>
+  },
+  { 
+    id: '208', 
+    name: 'Lottie 하트', 
+    category: 'Lottie 애니메이션',
+    render: (props) => <LottieHeartButton {...props}>하트</LottieHeartButton>
+  },
+  { 
+    id: '209', 
+    name: 'Lottie 로딩', 
+    category: 'Lottie 애니메이션',
+    render: (props) => <LottieLoadingButton isLoading={true} {...props}>로딩중</LottieLoadingButton>
+  },
+  { 
+    id: '210', 
+    name: '경축 팝업', 
+    category: 'Lottie 애니메이션',
+    render: (props) => <LottieCelebrationButton {...props}>경축</LottieCelebrationButton>
+  },
+  
+  // 동적 애니메이션 버튼
+  { 
+    id: '211', 
+    name: '파티클 폭발', 
+    category: '동적 애니메이션',
+    render: (props) => <ParticleButton {...props}>클릭</ParticleButton>
+  },
+  { 
+    id: '212', 
+    name: '물결 효과', 
+    category: '동적 애니메이션',
+    render: (props) => <WaveButton {...props}>물결</WaveButton>
+  },
 ];
 
 export const ButtonExamplePage = () => {
@@ -326,6 +380,8 @@ export const ButtonExamplePage = () => {
     '화려한 조합',
     '특수 애니메이션',
     '특수 조합',
+    'Lottie 애니메이션',
+    '동적 애니메이션',
   ], []);
 
   const buttonInfos = useMemo(() => {
@@ -378,9 +434,9 @@ export const ButtonExamplePage = () => {
                 {category}
               </span>
             ))}
-          </div>
         </div>
-      </div>
+        </div>
+        </div>
       
       {/* 메인 버튼 그리드 */}
       <div className="button-grid">
@@ -392,25 +448,29 @@ export const ButtonExamplePage = () => {
             data-category={button.category}
           >
             <div className="button-canvas">
-              <Button
-                variant={button.variant || 'primary'}
-                color={button.color || 'default'}
-                size={button.size || 'md'}
-                animation={button.animation}
-                leftIcon={button.leftIcon}
-                rightIcon={button.rightIcon}
-                isLoading={button.isLoading}
-                disabled={button.disabled}
-                fullWidth={button.fullWidth}
-              >
-                {button.name.length > 6 ? `${button.name.slice(0, 5)}..` : button.name}
-              </Button>
+              {button.render ? (
+                button.render({})
+              ) : (
+                <Button
+                  variant={button.variant || 'primary'}
+                  color={button.color || 'default'}
+                  size={button.size || 'md'}
+                  animation={button.animation}
+                  leftIcon={button.leftIcon}
+                  rightIcon={button.rightIcon}
+                  isLoading={button.isLoading}
+                  disabled={button.disabled}
+                  fullWidth={button.fullWidth}
+                >
+                  {button.name.length > 6 ? `${button.name.slice(0, 5)}..` : button.name}
+                </Button>
+              )}
             </div>
             <div className="button-name">{button.name}</div>
             <div className="button-category">{button.category}</div>
           </div>
         ))}
-      </div>
+        </div>
       
       <footer className="pokedex-footer">
         버튼 도감 v1.0 - 총 {BUTTON_DATA.length}종의 버튼을 모두 수집해보세요!
