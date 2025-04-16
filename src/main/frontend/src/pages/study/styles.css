@@ -1,0 +1,260 @@
+.study-page {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0.5rem;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  text-align: left;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.study-page h1 {
+  text-align: center;
+  color: #2a3f54;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.search-container {
+  margin-bottom: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.study-container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.units-list {
+  flex: 0 0 220px;
+  border-right: 1px solid #eee;
+  padding-right: 1rem;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.unit-item {
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+  text-align: left;
+}
+
+.unit-item:hover {
+  background-color: #f5f8ff;
+}
+
+.unit-item.active {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.unit-content {
+  flex: 1;
+  padding: 0 1.5rem 1rem 1.5rem;
+  overflow-y: auto;
+  height: 100%;
+  text-align: left;
+}
+
+.unit-content h2 {
+  color: #2a3f54;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #4a90e2;
+  font-size: 1.8rem;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  padding-top: 0.5rem;
+  z-index: 10;
+  text-align: left;
+}
+
+.content-area {
+  line-height: 1.7;
+  font-size: 1.05rem;
+  max-width: 100%;
+  text-align: left;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.content-area h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #3a5169;
+  font-size: 1.5rem;
+  border-left: 4px solid #4a90e2;
+  padding-left: 10px;
+  text-align: left;
+}
+
+.content-area h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  color: #3a5169;
+  font-size: 1.2rem;
+  text-align: left;
+}
+
+.content-area p {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.content-area ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.content-area li {
+  margin-bottom: 0.8rem;
+  text-align: left;
+}
+
+.content-area strong {
+  font-weight: 600;
+  color: #3a5169;
+}
+
+.content-area table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  table-layout: fixed;
+  text-align: left;
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.content-area th, .content-area td {
+  border: 1px solid #ddd;
+  padding: 0.8rem;
+  word-wrap: break-word;
+  text-align: left;
+}
+
+.content-area th {
+  background-color: #f5f8ff;
+  font-weight: 600;
+}
+
+.content-area code {
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  background-color: #f5f5f5;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.9em;
+}
+
+/* 앱 컨테이너에도 스타일 적용 */
+.app-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+
+.app-content {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .study-container {
+    flex-direction: column;
+  }
+  
+  .units-list {
+    flex: 0 0 auto;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding-right: 0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    max-height: 150px;
+    height: auto;
+  }
+
+  .unit-content {
+    padding: 0 0.5rem;
+    height: auto;
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .unit-content h2 {
+    position: static;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .study-page h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .content-area table {
+    font-size: 0.9rem;
+  }
+}
+
+/* body와 html에도 overflow-x: hidden 적용 */
+body, html {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.content-area p, .content-area li, .content-area h3, .content-area h4 {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.content-area table th, .content-area table td {
+  white-space: normal;
+  word-break: break-word;
+} 
