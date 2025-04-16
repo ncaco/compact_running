@@ -469,55 +469,33 @@ const STUDY_DATA: Unit[] = [
 
 export const StudyPage = () => {
   const [activeUnit, setActiveUnit] = useState<string>(STUDY_DATA[0].id);
-  const [searchTerm, setSearchTerm] = useState('');
-
+  
   const handleUnitClick = (unitId: string) => {
     setActiveUnit(unitId);
   };
-
-  const filteredUnits = STUDY_DATA.filter(unit => 
-    unit.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const activeUnitContent = STUDY_DATA.find(unit => unit.id === activeUnit);
-
+  
+  const activeUnitData = STUDY_DATA.find(unit => unit.id === activeUnit);
+  
   return (
     <div className="study-page">
-      <h1>정보처리기사 실기 이론 정리</h1>
-      
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="단원 검색..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
-      </div>
-      
       <div className="study-container">
         <div className="units-list">
-          {filteredUnits.map(unit => (
-            <div 
+          {STUDY_DATA.map((unit) => (
+            <div
               key={unit.id}
-              className={`unit-item ${activeUnit === unit.id ? 'active' : ''}`}
+              className={`unit-item ${unit.id === activeUnit ? 'active' : ''}`}
               onClick={() => handleUnitClick(unit.id)}
             >
               {unit.title}
             </div>
           ))}
         </div>
-        
         <div className="unit-content">
-          {activeUnitContent && (
-            <div>
-              <h2>{activeUnitContent.title}</h2>
-              <div 
-                className="content-area"
-                dangerouslySetInnerHTML={{ __html: activeUnitContent.content }} 
-              />
-            </div>
-          )}
+          <h2>{activeUnitData?.title}</h2>
+          <div
+            className="content-area"
+            dangerouslySetInnerHTML={{ __html: activeUnitData?.content || '' }}
+          />
         </div>
       </div>
     </div>
