@@ -591,7 +591,7 @@ export const ParticleButton = ({ children, ...props }: ButtonProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const particlesRef = useRef<Particle[]>([]);
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | undefined>(undefined);
   const previousTimeRef = useRef<number | undefined>(undefined);
 
   const colors = useMemo(() => [
@@ -1378,6 +1378,357 @@ export const BubbleButton = ({
         ref={bubbleRef}
         className="absolute rounded-full bg-teal-400 opacity-30 scale-0 transition-transform duration-600 ease-out pointer-events-none"
       />
+    </button>
+  );
+};
+
+// 3D 플립 버튼 컴포넌트
+export const FlipButton = ({ children, ...props }: ButtonProps) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+  
+  return (
+    <div className="relative h-10 perspective-500">
+      <button
+        className={`absolute inset-0 w-full h-full px-4 py-2 font-bold text-white rounded-md transition-transform duration-500 ${props.className || ""}`}
+        style={{
+          background: isFlipped ? '#2563eb' : '#7c3aed',
+          transform: isFlipped ? 'rotateX(180deg)' : 'rotateX(0)',
+          backfaceVisibility: 'hidden',
+          transformStyle: 'preserve-3d',
+        }}
+        onClick={() => setIsFlipped(false)}
+        {...props}
+      >
+        <span>{children}</span>
+      </button>
+      <button
+        className={`absolute inset-0 w-full h-full px-4 py-2 font-bold text-white rounded-md transition-transform duration-500 ${props.className || ""}`}
+        style={{
+          background: '#2563eb',
+          transform: isFlipped ? 'rotateX(0)' : 'rotateX(-180deg)',
+          backfaceVisibility: 'hidden',
+          transformStyle: 'preserve-3d',
+        }}
+        onClick={() => setIsFlipped(true)}
+      >
+        <span style={{ transform: 'rotateX(180deg)', display: 'inline-block' }}>클릭됨!</span>
+      </button>
+    </div>
+  );
+};
+
+// 3D 카드 효과 버튼
+export const CardButton = ({ children, ...props }: ButtonProps) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!buttonRef.current) return;
+    
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (y - centerY) / 10;
+    const rotateY = (centerX - x) / 10;
+    
+    setRotation({ x: rotateX, y: rotateY });
+  };
+  
+  return (
+    <button
+      ref={buttonRef}
+      className={`relative px-6 py-3 bg-gradient-to-br from-cyan-500 to-blue-600 text-white font-bold rounded-lg shadow-lg transition-all duration-300 ${props.className || ""}`}
+      style={{
+        transform: isHovered ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale3d(1.05, 1.05, 1.05)` : 'perspective(1000px) rotateX(0) rotateY(0)',
+        transformStyle: 'preserve-3d',
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setRotation({ x: 0, y: 0 });
+      }}
+      {...props}
+    >
+      <span className="relative z-10">{children}</span>
+      <div 
+        className="absolute inset-0 rounded-lg bg-gradient-to-br from-blue-500/30 to-cyan-500/30"
+        style={{
+          transform: 'translateZ(-10px)',
+          filter: 'blur(4px)',
+          opacity: isHovered ? 1 : 0,
+          transition: 'opacity 0.3s ease',
+        }}
+      />
+    </button>
+  );
+};
+
+// 3D 입체 버튼 컴포넌트
+export const CubeButton = ({ children, ...props }: ButtonProps) => {
+  const [isPressed, setIsPressed] = useState(false);
+  
+  return (
+    <div className="relative" style={{ height: '40px', width: '120px' }}>
+      <button
+        className={`absolute top-0 left-0 w-full h-full px-4 py-2 font-bold text-white bg-emerald-600 rounded-md transition-all ${props.className || ""}`}
+        style={{
+          transform: isPressed ? 'translateY(4px)' : 'translateY(0)',
+          transitionDuration: '0.1s',
+        }}
+        onMouseDown={() => setIsPressed(true)}
+        onMouseUp={() => setIsPressed(false)}
+        onMouseLeave={() => setIsPressed(false)}
+        {...props}
+      >
+        {children}
+      </button>
+      {/* 왼쪽 면 */}
+      <div 
+        className="absolute left-0 h-full w-2 bg-emerald-800 rounded-l-md"
+        style={{
+          transformOrigin: 'left center',
+          transform: 'translateX(-100%) skewY(45deg)',
+          height: isPressed ? '36px' : '40px',
+          top: isPressed ? '4px' : '0',
+          transition: 'all 0.1s',
+        }}
+      />
+      {/* 아래쪽 면 */}
+      <div 
+        className="absolute bottom-0 w-full h-2 bg-emerald-800 rounded-b-md"
+        style={{
+          transformOrigin: 'bottom center',
+          transform: 'translateY(100%) skewX(45deg)',
+          height: isPressed ? '0' : '4px',
+          transition: 'all 0.1s',
+        }}
+      />
+      {/* 오른쪽 면 */}
+      <div 
+        className="absolute right-0 h-full w-2 bg-emerald-700 rounded-r-md"
+        style={{
+          transformOrigin: 'right center',
+          transform: 'translateX(100%) skewY(-45deg)',
+          height: isPressed ? '36px' : '40px',
+          top: isPressed ? '4px' : '0',
+          transition: 'all 0.1s',
+        }}
+      />
+    </div>
+  );
+};
+
+// 3D 레이어 버튼
+export const LayeredButton = ({ children, ...props }: ButtonProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  
+  return (
+    <div 
+      className="relative" 
+      style={{ 
+        height: '40px', 
+        transformStyle: 'preserve-3d', 
+        perspective: '1000px' 
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsPressed(false);
+      }}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+    >
+      <button
+        className={`relative w-full h-full px-5 py-2 bg-indigo-600 font-bold text-white rounded-md transition-all ${props.className || ""}`}
+        style={{
+          transform: isPressed 
+            ? 'translateZ(0)' 
+            : isHovered 
+              ? 'translateZ(10px)' 
+              : 'translateZ(0)',
+          transition: 'transform 0.2s ease',
+        }}
+        {...props}
+      >
+        <span className="relative z-10">{children}</span>
+      </button>
+      
+      {/* 그림자 레이어 */}
+      <div 
+        className="absolute inset-0 rounded-md bg-black/20"
+        style={{
+          transform: `translateZ(-10px) ${isPressed ? 'scale(0.98)' : isHovered ? 'scale(1.05)' : 'scale(1)'}`,
+          transition: 'all 0.2s ease',
+          filter: `blur(${isPressed ? 2 : 4}px)`,
+        }}
+      />
+      
+      {/* 첫 번째 레이어 */}
+      <div 
+        className="absolute inset-0 rounded-md bg-indigo-700"
+        style={{
+          transform: `translateZ(-5px) ${isPressed ? 'scale(0.99)' : isHovered ? 'scale(1.03)' : 'scale(1)'}`,
+          transition: 'all 0.2s ease',
+        }}
+      />
+      
+      {/* 두 번째 레이어 */}
+      <div 
+        className="absolute inset-0 rounded-md bg-indigo-800"
+        style={{
+          transform: `translateZ(-10px) ${isPressed ? 'scale(0.98)' : isHovered ? 'scale(1.05)' : 'scale(1)'}`,
+          transition: 'all 0.2s ease',
+        }}
+      />
+    </div>
+  );
+};
+
+// 3D 네온 프레임 버튼
+export const NeonFrameButton = ({ children, ...props }: ButtonProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <button
+      className={`relative px-6 py-2 bg-slate-900 text-cyan-400 font-bold rounded-md transition-all ${props.className || ""}`}
+      style={{
+        boxShadow: isHovered 
+          ? '0 0 15px rgba(34, 211, 238, 0.7), 0 0 30px rgba(34, 211, 238, 0.4)'
+          : '0 0 5px rgba(34, 211, 238, 0.3)',
+        transform: isHovered ? 'translateZ(10px)' : 'translateZ(0)',
+        transition: 'all 0.3s ease',
+        transformStyle: 'preserve-3d',
+        perspective: '1000px',
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      {...props}
+    >
+      <span className="relative z-10">{children}</span>
+      
+      {/* 앞쪽 네온 프레임 */}
+      <div 
+        className="absolute inset-0 border-2 border-cyan-400 rounded-md"
+        style={{
+          transform: isHovered ? 'translateZ(5px)' : 'translateZ(0)',
+          boxShadow: isHovered ? '0 0 10px rgba(34, 211, 238, 0.7) inset' : 'none',
+          transition: 'all 0.3s ease',
+        }}
+      />
+      
+      {/* 뒤쪽 네온 프레임 */}
+      <div 
+        className="absolute inset-0 border-2 border-cyan-600 rounded-md"
+        style={{
+          transform: isHovered ? 'translateZ(-5px)' : 'translateZ(-3px)',
+          opacity: isHovered ? 0.7 : 0.3,
+          transition: 'all 0.3s ease',
+        }}
+      />
+    </button>
+  );
+};
+
+// 3D 슬라이딩 레이어 버튼
+export const SlidingLayerButton = ({ children, ...props }: ButtonProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <button
+      className={`relative px-6 py-2 bg-white font-bold text-gray-800 rounded-md overflow-hidden transition-all ${props.className || ""}`}
+      style={{
+        boxShadow: isHovered 
+          ? '0 10px 20px rgba(0, 0, 0, 0.15)'
+          : '0 4px 6px rgba(0, 0, 0, 0.1)',
+        transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
+        transition: 'all 0.3s ease',
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      {...props}
+    >
+      <span 
+        className="relative z-10"
+        style={{
+          textShadow: isHovered ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none',
+          color: isHovered ? 'white' : 'inherit',
+          transition: 'all 0.3s ease',
+        }}
+      >{children}</span>
+      
+      {/* 상단 레이어 */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-md"
+        style={{
+          transformOrigin: 'bottom',
+          transform: isHovered ? 'rotateX(0)' : 'rotateX(90deg)',
+          transition: 'transform 0.4s ease',
+          zIndex: 5,
+        }}
+      />
+      
+      {/* 하단 레이어 */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-500 rounded-md"
+        style={{
+          transformOrigin: 'top',
+          transform: isHovered ? 'rotateX(0)' : 'rotateX(-90deg)',
+          transition: 'transform 0.4s ease',
+          transitionDelay: '0.05s',
+          zIndex: 4,
+        }}
+      />
+    </button>
+  );
+};
+
+export const BouncySquishButton = ({ children, ...props }: ButtonProps) => {
+  return (
+    <button
+      {...props}
+      className="relative px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold rounded-xl transform transition-all duration-300 hover:scale-110 active:scale-95 hover:-translate-y-2 active:translate-y-1 shadow-lg hover:shadow-xl active:shadow-md before:content-[''] before:absolute before:inset-0 before:bg-white/20 before:rounded-xl before:opacity-0 hover:before:opacity-100 before:transition-opacity"
+    >
+      {children}
+    </button>
+  );
+};
+
+export const JellyPushButton = ({ children, ...props }: ButtonProps) => {
+  return (
+    <button
+      {...props}
+      className="relative px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold rounded-xl transform transition-all duration-300 hover:scale-110 active:scale-90 hover:-rotate-2 active:rotate-2 shadow-lg hover:shadow-xl active:shadow-md before:content-[''] before:absolute before:inset-0 before:bg-white/20 before:rounded-xl before:opacity-0 hover:before:opacity-100 before:transition-opacity"
+    >
+      {children}
+    </button>
+  );
+};
+
+export const PopButton = ({ children, ...props }: ButtonProps) => {
+  return (
+    <button
+      {...props}
+      className="relative px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-xl transform transition-all duration-200 hover:scale-125 active:scale-75 shadow-lg hover:shadow-2xl active:shadow-inner"
+    >
+      {children}
+    </button>
+  );
+};
+
+export const SpringButton = ({ children, ...props }: ButtonProps) => {
+  return (
+    <button
+      {...props}
+      className="relative px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-xl transform transition-all duration-300 hover:-translate-y-4 active:translate-y-2 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl active:shadow-md"
+    >
+      {children}
     </button>
   );
 }; 

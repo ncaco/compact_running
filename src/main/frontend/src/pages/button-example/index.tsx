@@ -22,7 +22,17 @@ import {
   MetallicButton,
   TextScaleButton,
   HotItemButton,
-  InteractiveBorderButton
+  InteractiveBorderButton,
+  FlipButton,
+  CardButton,
+  CubeButton,
+  LayeredButton,
+  NeonFrameButton,
+  SlidingLayerButton,
+  BouncySquishButton,
+  JellyPushButton,
+  PopButton,
+  SpringButton,
 } from '@/components/Buttons'
 
 // 아직 개발되지 않은 버튼 컴포넌트 임시 정의
@@ -462,6 +472,68 @@ const BUTTON_DATA: ButtonData[] = [
     category: '창의적 디자인',
     render: () => <InteractiveBorderButton>테두리 효과</InteractiveBorderButton>,
   },
+
+  // 새로운 3D 버튼 섹션 추가
+  {
+    id: '3d-button-1',
+    name: '3D 플립 버튼',
+    category: '3D 버튼',
+    render: () => <FlipButton>플립 효과</FlipButton>,
+  },
+  {
+    id: '3d-button-2',
+    name: '3D 카드 버튼',
+    category: '3D 버튼',
+    render: () => <CardButton>마우스 움직임</CardButton>,
+  },
+  {
+    id: '3d-button-3',
+    name: '3D 큐브 버튼',
+    category: '3D 버튼',
+    render: () => <CubeButton>입체 효과</CubeButton>,
+  },
+  {
+    id: '3d-button-4',
+    name: '3D 레이어 버튼',
+    category: '3D 버튼',
+    render: () => <LayeredButton>레이어드</LayeredButton>,
+  },
+  {
+    id: '3d-button-5',
+    name: '3D 네온 프레임',
+    category: '3D 버튼',
+    render: () => <NeonFrameButton>네온 프레임</NeonFrameButton>,
+  },
+  {
+    id: '3d-button-6',
+    name: '3D 슬라이딩',
+    category: '3D 버튼',
+    render: () => <SlidingLayerButton>슬라이딩</SlidingLayerButton>,
+  },
+  {
+    id: '3d-button-7',
+    name: '쫀득이 버튼',
+    category: '3D 버튼',
+    render: () => <BouncySquishButton>쫀득쫀득</BouncySquishButton>,
+  },
+  {
+    id: '3d-button-8',
+    name: '젤리 버튼',
+    category: '3D 버튼',
+    render: () => <JellyPushButton>통통통</JellyPushButton>,
+  },
+  {
+    id: '3d-button-9',
+    name: '팝콘 버튼',
+    category: '3D 버튼',
+    render: () => <PopButton>팝!</PopButton>,
+  },
+  {
+    id: '3d-button-10',
+    name: '스프링 버튼',
+    category: '3D 버튼',
+    render: () => <SpringButton>통통!</SpringButton>,
+  },
 ];
 
 export const ButtonExamplePage = () => {
@@ -476,7 +548,7 @@ export const ButtonExamplePage = () => {
         btn.setAttribute('data-content', btn.textContent);
       }
     });
-
+    
     // 글리치 애니메이션 버튼에 data-content 속성 추가
     const glitchAnimButtons = document.querySelectorAll('.btn-animation-glitch');
     glitchAnimButtons.forEach((btn) => {
@@ -512,6 +584,7 @@ export const ButtonExamplePage = () => {
     '동적 애니메이션',
     '인터랙티브 효과',
     '창의적 디자인',
+    '3D 버튼',
   ], []);
 
   const buttonInfos = useMemo(() => {
@@ -564,9 +637,9 @@ export const ButtonExamplePage = () => {
                 {category}
               </span>
             ))}
-          </div>
         </div>
-      </div>
+        </div>
+        </div>
 
       {/* 메인 버튼 그리드 */}
       <div className="button-grid">
@@ -581,7 +654,7 @@ export const ButtonExamplePage = () => {
               {button.render ? (
                 button.render({})
               ) : (
-                <Button
+          <Button
                   variant={button.variant || 'primary'}
                   color={button.color || 'default'}
                   size={button.size || 'md'}
@@ -593,14 +666,14 @@ export const ButtonExamplePage = () => {
                   fullWidth={button.fullWidth}
                 >
                   {button.name.length > 6 ? `${button.name.slice(0, 5)}..` : button.name}
-                </Button>
+          </Button>
               )}
-            </div>
+        </div>
             <div className="button-name">{button.name}</div>
             <div className="button-category">{button.category}</div>
-          </div>
+        </div>
         ))}
-      </div>
+        </div>
 
       <footer className="pokedex-footer">
         버튼 도감 v1.0 - 총 {BUTTON_DATA.length}종의 버튼을 모두 수집해보세요!

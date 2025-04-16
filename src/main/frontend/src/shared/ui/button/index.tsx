@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, FC, PropsWithChildren, ReactNode, MouseEvent } from 'react'
+import { ButtonHTMLAttributes, FC, PropsWithChildren, ReactNode, MouseEvent } from 'react'
 import confetti from 'canvas-confetti'
 import './styles.css'
 import classNames from 'classnames'
