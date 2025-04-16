@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './styles.css';
 
 // 단원별 내용 정의
@@ -469,12 +469,231 @@ const STUDY_DATA: Unit[] = [
 
 export const StudyPage = () => {
   const [activeUnit, setActiveUnit] = useState<string>(STUDY_DATA[0].id);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const isScrollingRef = useRef(false);
+  const timeoutRef = useRef<number | null>(null);
+  const keyTimeoutRef = useRef<number | null>(null);
+  const isKeyPressedRef = useRef<{[key: string]: boolean}>({});
   
   const handleUnitClick = (unitId: string) => {
     setActiveUnit(unitId);
   };
   
   const activeUnitData = STUDY_DATA.find(unit => unit.id === activeUnit);
+  const activeUnitIndex = STUDY_DATA.findIndex(unit => unit.id === activeUnit);
+  
+  const goToNextUnit = () => {
+    if (activeUnitIndex < STUDY_DATA.length - 1) {
+      setActiveUnit(STUDY_DATA[activeUnitIndex + 1].id);
+      // 스크롤 위치를 맨 위로 초기화
+      if (contentRef.current) {
+        contentRef.current.scrollTop = 0;
+      }
+    }
+  };
+  
+  const goToPrevUnit = () => {
+    if (activeUnitIndex > 0) {
+      setActiveUnit(STUDY_DATA[activeUnitIndex - 1].id);
+      // 스크롤 위치를 맨 아래로 이동
+      if (contentRef.current) {
+        setTimeout(() => {
+          if (contentRef.current) {
+            contentRef.current.scrollTop = contentRef.current.scrollHeight;
+          }
+        }, 50);
+      }
+    }
+  };
+  
+  // 스크롤 위치 체크 함수
+  const checkScrollPosition = (element: HTMLElement): { isAtBottom: boolean, isAtTop: boolean } => {
+    // 스크롤이 맨 아래에 도달했는지 확인
+    const isAtBottom = 
+      Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) < 5;
+    
+    // 스크롤이 맨 위에 도달했는지 확인
+    const isAtTop = element.scrollTop === 0;
+    
+    return { isAtBottom, isAtTop };
+  };
+  
+  // 방향키 스크롤 함수
+  const handleArrowScroll = (direction: 'up' | 'down', isLongPress: boolean = false) => {
+    const contentElement = contentRef.current;
+    if (!contentElement) return;
+    
+    const scrollAmount = 50; // 한 번에 스크롤할 양(px)
+    const { isAtBottom, isAtTop } = checkScrollPosition(contentElement);
+    
+    if (direction === 'down') {
+      if (isAtBottom) {
+        goToNextUnit();
+      } else {
+        // 꾹 누를 때는 스무스 효과 제거하여 더 빠르고 자연스럽게 스크롤
+        contentElement.scrollBy({ 
+          top: scrollAmount, 
+          behavior: isLongPress ? 'auto' : 'smooth' 
+        });
+      }
+    } else if (direction === 'up') {
+      if (isAtTop) {
+        goToPrevUnit();
+      } else {
+        contentElement.scrollBy({ 
+          top: -scrollAmount, 
+          behavior: isLongPress ? 'auto' : 'smooth' 
+        });
+      }
+    }
+  };
+  
+  // 키 누름 감지 및 반복 처리
+  useEffect(() => {
+    const keyPressStartTime: {[key: string]: number} = {};
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.repeat) return; // 키 반복 이벤트는 무시 (자체 처리를 위해)
+      
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        
+        // 키 눌림 상태 기록 및 시작 시간 저장
+        isKeyPressedRef.current[e.key] = true;
+        keyPressStartTime[e.key] = Date.now();
+        
+        // 첫 누름에 대한 스크롤 처리
+        if (e.key === 'ArrowDown') {
+          handleArrowScroll('down');
+        } else if (e.key === 'ArrowUp') {
+          handleArrowScroll('up');
+        }
+        
+        // 지속적인 키 누름 처리
+        let elapsed = 0;
+        
+        const keyIntervalId = window.setInterval(() => {
+          if (!isKeyPressedRef.current[e.key]) {
+            clearInterval(keyIntervalId);
+            return;
+          }
+          
+          elapsed = Date.now() - keyPressStartTime[e.key];
+          
+          // 누른 시간이 길어질수록 스크롤 빈도 증가 (최대 30ms까지 빨라짐)
+          const initialDelay = 400; // 처음 0.4초는 대기
+          
+          if (elapsed < initialDelay) {
+            return; // 초기 지연 시간 동안은 스크롤하지 않음
+          }
+          
+          // 연속 스크롤로 전환 (0.4초 이후)
+          if (e.key === 'ArrowDown') {
+            handleArrowScroll('down', true);
+          } else if (e.key === 'ArrowUp') {
+            handleArrowScroll('up', true);
+          }
+        }, 30) as unknown as number; // 빠른 스크롤을 위해 30ms로 설정
+        
+        // 키를 놓을 때 clearInterval이 호출되지 않은 경우를 위한 안전장치
+        keyTimeoutRef.current = window.setTimeout(() => {
+          clearInterval(keyIntervalId);
+        }, 60000) as unknown as number;
+      } else if (e.key === 'PageDown') {
+        e.preventDefault();
+        const contentElement = contentRef.current;
+        if (!contentElement) return;
+        
+        const { isAtBottom } = checkScrollPosition(contentElement);
+        if (isAtBottom) {
+          goToNextUnit();
+        } else {
+          contentElement.scrollBy({ top: contentElement.clientHeight - 100, behavior: 'smooth' });
+        }
+      } else if (e.key === 'PageUp') {
+        e.preventDefault();
+        const contentElement = contentRef.current;
+        if (!contentElement) return;
+        
+        const { isAtTop } = checkScrollPosition(contentElement);
+        if (isAtTop) {
+          goToPrevUnit();
+        } else {
+          contentElement.scrollBy({ top: -(contentElement.clientHeight - 100), behavior: 'smooth' });
+        }
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        if (contentRef.current) {
+          contentRef.current.scrollTop = 0;
+        }
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        if (contentRef.current) {
+          contentRef.current.scrollTop = contentRef.current.scrollHeight;
+        }
+      }
+    };
+    
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        isKeyPressedRef.current[e.key] = false;
+      }
+    };
+    
+    // 스크롤 이벤트 처리
+    const handleWheel = (e: WheelEvent) => {
+      const contentElement = contentRef.current;
+      if (!contentElement || isScrollingRef.current) return;
+      
+      const { isAtBottom, isAtTop } = checkScrollPosition(contentElement);
+      
+      if ((isAtBottom && e.deltaY > 0) || (isAtTop && e.deltaY < 0)) {
+        // 스크롤 방지 플래그 설정
+        isScrollingRef.current = true;
+        e.preventDefault();
+        
+        // 500ms 후에 플래그 해제
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = window.setTimeout(() => {
+          isScrollingRef.current = false;
+          timeoutRef.current = null;
+        }, 500) as unknown as number;
+        
+        if (isAtBottom && e.deltaY > 0) {
+          goToNextUnit();
+        } else if (isAtTop && e.deltaY < 0) {
+          goToPrevUnit();
+        }
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    
+    const contentElement = contentRef.current;
+    if (contentElement) {
+      contentElement.addEventListener('wheel', handleWheel, { passive: false });
+    }
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+      
+      if (contentElement) {
+        contentElement.removeEventListener('wheel', handleWheel);
+      }
+      
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (keyTimeoutRef.current) clearTimeout(keyTimeoutRef.current);
+    };
+  }, [activeUnit, activeUnitIndex]);
+  
+  // 단원 변경 시 스크롤 초기화
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0;
+    }
+  }, [activeUnit]);
   
   return (
     <div className="study-page">
@@ -490,14 +709,22 @@ export const StudyPage = () => {
             </div>
           ))}
         </div>
-        <div className="unit-content">
+        <div className="unit-content" ref={contentRef} tabIndex={0}>
           <h2>{activeUnitData?.title}</h2>
           <div
             className="content-area"
             dangerouslySetInnerHTML={{ __html: activeUnitData?.content || '' }}
           />
+          <div className="navigation-hint">
+            {activeUnitIndex < STUDY_DATA.length - 1 && (
+              <div className="next-hint" onClick={goToNextUnit}>
+                ↓ 다음 단원: {STUDY_DATA[activeUnitIndex + 1].title}
+              </div>
+            )}
+            <div className="scroll-info">방향키(↑↓)로 50px씩 스크롤 / 꾹 누르면 연속 스크롤</div>
+          </div>
         </div>
       </div>
     </div>
   );
-}; 
+};

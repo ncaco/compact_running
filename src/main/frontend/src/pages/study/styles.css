@@ -67,6 +67,12 @@
   overflow-y: auto;
   height: 100%;
   text-align: left;
+  outline: none;
+  scroll-behavior: smooth;
+}
+
+.unit-content:focus {
+  outline: none;
 }
 
 .unit-content h2 {
@@ -240,4 +246,44 @@ body, html {
 .content-area table th, .content-area table td {
   white-space: normal;
   word-break: break-word;
+}
+
+.navigation-hint {
+  padding: 1rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid #eee;
+  margin-top: 1rem;
+}
+
+.next-hint {
+  color: #4a90e2;
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+  animation: pulse 2s infinite;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.scroll-info {
+  color: #888;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.next-hint:hover {
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
 } 
