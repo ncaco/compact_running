@@ -2,7 +2,41 @@ import { Button } from '@shared/ui/button'
 import './styles.css'
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { ButtonVariant, ButtonColor, ButtonSize, ButtonAnimation } from '@shared/ui/button'
-import { LottieSparkleButton, LottieConfettiButton, LottiePulseButton, LottieHeartButton, LottieLoadingButton, LottieCelebrationButton, ParticleButton, WaveButton } from '../../components/Buttons'
+import {
+  LottieSparkleButton,
+  LottieConfettiButton,
+  LottiePulseButton,
+  LottieHeartButton,
+  LottieLoadingButton,
+  LottieCelebrationButton,
+  ParticleButton,
+  WaveButton,
+  BlobButton,
+  NeonLightButton,
+  PulseRippleButton,
+  KineticButton,
+  SketchButton,
+  PaperNoteButton,
+  MinimalGradientButton,
+  SlidingBackgroundButton,
+  MetallicButton,
+  TextScaleButton,
+  HotItemButton,
+  InteractiveBorderButton
+} from '@/components/Buttons'
+
+// 아직 개발되지 않은 버튼 컴포넌트 임시 정의
+const MorphingButton = ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <button className="px-4 py-2 bg-purple-600 text-white rounded" {...props}>{children}</button>
+);
+
+const MouseTrackingButton = ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <button className="px-4 py-2 bg-blue-600 text-white rounded" {...props}>{children}</button>
+);
+
+const BubbleButton = ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <button className="px-4 py-2 bg-teal-600 text-white rounded" {...props}>{children}</button>
+);
 
 // 버튼 데이터 타입 정의
 interface ButtonData {
@@ -28,7 +62,7 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '002', name: '세컨더리', variant: 'secondary', category: '기본 타입' },
   { id: '003', name: '아웃라인', variant: 'outline', category: '기본 타입' },
   { id: '004', name: '텍스트', variant: 'text', category: '기본 타입' },
-  
+
   // 특수 버튼 변형
   { id: '005', name: '네온', variant: 'neon', category: '특수 타입' },
   { id: '006', name: '버블', variant: 'bubble', category: '특수 타입' },
@@ -40,18 +74,18 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '012', name: '네온 글로우', variant: 'neonglow', category: '특수 타입' },
   { id: '013', name: '쫀득이', variant: 'elastic', category: '특수 타입' },
   { id: '014', name: '통통이', variant: 'bouncy', category: '특수 타입' },
-  
+
   // 색상(Color) 타입
   { id: '015', name: '성공', color: 'success', category: '색상 타입' },
   { id: '016', name: '위험', color: 'danger', category: '색상 타입' },
   { id: '017', name: '경고', color: 'warning', category: '색상 타입' },
   { id: '018', name: '정보', color: 'info', category: '색상 타입' },
-  
+
   // 크기(Size) 타입
   { id: '019', name: '작은', size: 'sm', category: '크기 타입' },
   { id: '020', name: '중간', size: 'md', category: '크기 타입' },
   { id: '021', name: '큰', size: 'lg', category: '크기 타입' },
-  
+
   // 애니메이션(Animation) 타입
   { id: '022', name: '리플', animation: 'ripple', category: '애니메이션' },
   { id: '023', name: '글리치', animation: 'glitch', category: '애니메이션' },
@@ -65,7 +99,7 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '031', name: '흔들림', animation: 'shake', category: '애니메이션' },
   { id: '032', name: '바운스', animation: 'bounce', category: '애니메이션' },
   { id: '033', name: '젤리', animation: 'jelly', category: '애니메이션' },
-  
+
   // 새로운 Confetti 효과 애니메이션
   { id: '061', name: '불꽃놀이', animation: 'fireworks', category: 'Confetti' },
   { id: '062', name: '눈내림', animation: 'snow', category: 'Confetti' },
@@ -73,17 +107,17 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '064', name: '하트', animation: 'hearts', category: 'Confetti' },
   { id: '065', name: '비내림', animation: 'rain', category: 'Confetti' },
   { id: '066', name: '파티', animation: 'party', category: 'Confetti' },
-  
+
   // 아이콘 타입
   { id: '034', name: '왼쪽 아이콘', leftIcon: <span>⬅️</span>, category: '아이콘' },
   { id: '035', name: '오른쪽 아이콘', rightIcon: <span>➡️</span>, category: '아이콘' },
   { id: '036', name: '양쪽 아이콘', leftIcon: <span>⬅️</span>, rightIcon: <span>➡️</span>, category: '아이콘' },
-  
+
   // 상태 타입
   { id: '037', name: '로딩 중', isLoading: true, category: '상태' },
   { id: '038', name: '비활성화', disabled: true, category: '상태' },
   { id: '039', name: '전체 너비', fullWidth: true, category: '상태' },
-  
+
   // 조합 타입
   { id: '040', name: '네온 성공', variant: 'neon', color: 'success', category: '조합' },
   { id: '041', name: '버블 위험', variant: 'bubble', color: 'danger', category: '조합' },
@@ -96,7 +130,7 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '048', name: '작은 버블', variant: 'bubble', size: 'sm', category: '조합' },
   { id: '049', name: '네온 반짝', variant: 'neon', animation: 'sparkle', category: '조합' },
   { id: '050', name: '버블 불꽃', variant: 'bubble', animation: 'fire', category: '조합' },
-  
+
   // 특별 조합
   { id: '051', name: '네온 별', variant: 'neon', leftIcon: <span>⭐</span>, category: '특별' },
   { id: '052', name: '폭발 위험', variant: 'explode', color: 'danger', category: '특별' },
@@ -108,7 +142,7 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '058', name: '쫀득 리플', variant: 'elastic', animation: 'ripple', category: '특별' },
   { id: '059', name: '통통 펄스', variant: 'bouncy', animation: 'pulse', category: '특별' },
   { id: '060', name: '네온 물방울', variant: 'neon', leftIcon: <span>💧</span>, category: '특별' },
-  
+
   // 새로운 confetti 효과 특별 조합
   { id: '067', name: '요요 불꽃놀이', variant: 'yoyo', animation: 'fireworks', category: '특별 Confetti' },
   { id: '068', name: '네온 눈내림', variant: 'neon', animation: 'snow', category: '특별 Confetti' },
@@ -119,7 +153,7 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '073', name: '요요 별빛', variant: 'yoyo', animation: 'stars', color: 'success', category: '특별 Confetti' },
   { id: '074', name: '네온 파티', variant: 'neon', animation: 'party', color: 'info', category: '특별 Confetti' },
   { id: '075', name: '글리치 하트', variant: 'glitch', animation: 'hearts', color: 'danger', category: '특별 Confetti' },
-  
+
   // 새로운 특이한 버튼 타입
   { id: '076', name: '레트로', variant: 'retro', category: '특이한 버튼' },
   { id: '077', name: '픽셀', variant: 'pixel', category: '특이한 버튼' },
@@ -130,13 +164,13 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '082', name: '사이버펑크', variant: 'cyberpunk', category: '특이한 버튼' },
   { id: '083', name: '스티치', variant: 'stitched', category: '특이한 버튼' },
   { id: '084', name: '종이접기', variant: 'origami', category: '특이한 버튼' },
-  
+
   // 특이한 버튼 + 색상 조합
   { id: '085', name: '레트로 위험', variant: 'retro', color: 'danger', category: '특이한 조합' },
   { id: '086', name: '픽셀 성공', variant: 'pixel', color: 'success', category: '특이한 조합' },
   { id: '087', name: '홀로그램 정보', variant: 'hologram', color: 'info', category: '특이한 조합' },
   { id: '088', name: '사이버펑크 경고', variant: 'cyberpunk', color: 'warning', category: '특이한 조합' },
-  
+
   // 특이한 버튼 + 애니메이션 조합
   { id: '089', name: '레트로 불꽃놀이', variant: 'retro', animation: 'fireworks', category: '특이한 조합' },
   { id: '090', name: '픽셀 눈내림', variant: 'pixel', animation: 'snow', category: '특이한 조합' },
@@ -144,7 +178,7 @@ const BUTTON_DATA: ButtonData[] = [
   { id: '092', name: '기계식 하트', variant: 'mechanical', animation: 'hearts', category: '특이한 조합' },
   { id: '093', name: '유리 비내림', variant: 'glass', animation: 'rain', category: '특이한 조합' },
   { id: '094', name: '사이버펑크 파티', variant: 'cyberpunk', animation: 'party', category: '특이한 조합' },
-  
+
   // 특이한 버튼 + 아이콘 조합
   { id: '095', name: '레트로 게임', variant: 'retro', leftIcon: <span>🎮</span>, category: '특이한 조합' },
   { id: '096', name: '픽셀 아트', variant: 'pixel', leftIcon: <span>🎨</span>, category: '특이한 조합' },
@@ -248,7 +282,7 @@ const BUTTON_DATA: ButtonData[] = [
     animation: 'scale' as ButtonAnimation,
     variant: 'primary',
   },
-  
+
   // 특수 조합 버튼
   {
     id: '201',
@@ -284,62 +318,156 @@ const BUTTON_DATA: ButtonData[] = [
   },
 
   // Lottie 애니메이션 버튼
-  { 
-    id: '205', 
-    name: 'Lottie 반짝임', 
+  {
+    id: '205',
+    name: 'Lottie 반짝임',
     category: 'Lottie 애니메이션',
     render: (props) => <LottieSparkleButton {...props}>반짝임</LottieSparkleButton>
   },
-  { 
-    id: '206', 
-    name: 'Lottie 컨페티', 
+  {
+    id: '206',
+    name: 'Lottie 컨페티',
     category: 'Lottie 애니메이션',
     render: (props) => <LottieConfettiButton {...props}>축하</LottieConfettiButton>
   },
-  { 
-    id: '207', 
-    name: 'Lottie 펄스', 
+  {
+    id: '207',
+    name: 'Lottie 펄스',
     category: 'Lottie 애니메이션',
     render: (props) => <LottiePulseButton {...props}>펄스</LottiePulseButton>
   },
-  { 
-    id: '208', 
-    name: 'Lottie 하트', 
+  {
+    id: '208',
+    name: 'Lottie 하트',
     category: 'Lottie 애니메이션',
     render: (props) => <LottieHeartButton {...props}>하트</LottieHeartButton>
   },
-  { 
-    id: '209', 
-    name: 'Lottie 로딩', 
+  {
+    id: '209',
+    name: 'Lottie 로딩',
     category: 'Lottie 애니메이션',
     render: (props) => <LottieLoadingButton isLoading={true} {...props}>로딩중</LottieLoadingButton>
   },
-  { 
-    id: '210', 
-    name: '경축 팝업', 
+  {
+    id: '210',
+    name: '경축 팝업',
     category: 'Lottie 애니메이션',
     render: (props) => <LottieCelebrationButton {...props}>경축</LottieCelebrationButton>
   },
-  
+
   // 동적 애니메이션 버튼
-  { 
-    id: '211', 
-    name: '파티클 폭발', 
+  {
+    id: '211',
+    name: '파티클 폭발',
     category: '동적 애니메이션',
     render: (props) => <ParticleButton {...props}>클릭</ParticleButton>
   },
-  { 
-    id: '212', 
-    name: '물결 효과', 
+  {
+    id: '212',
+    name: '물결 효과',
     category: '동적 애니메이션',
     render: (props) => <WaveButton {...props}>물결</WaveButton>
+  },
+
+  // 새로운 효과 버튼들 추가
+  {
+    id: 'interactive-button-1',
+    name: '블롭 효과 버튼',
+    category: '인터랙티브 효과',
+    render: () => <BlobButton>블롭 효과</BlobButton>,
+  },
+  {
+    id: 'interactive-button-2',
+    name: '네온 라이트 버튼',
+    category: '인터랙티브 효과',
+    render: () => <NeonLightButton>네온 라이트</NeonLightButton>,
+  },
+  {
+    id: 'interactive-button-3',
+    name: '그라데이션 모핑 버튼',
+    category: '인터랙티브 효과',
+    render: () => <MorphingButton>모핑 효과</MorphingButton>,
+  },
+  {
+    id: 'interactive-button-4',
+    name: '마우스 추적 버튼',
+    category: '인터랙티브 효과',
+    render: () => <MouseTrackingButton>마우스를 움직여보세요</MouseTrackingButton>,
+  },
+  {
+    id: 'interactive-button-5',
+    name: '글래스 버블 버튼',
+    category: '인터랙티브 효과',
+    render: () => <BubbleButton>글래스 버블</BubbleButton>,
+  },
+  {
+    id: 'interactive-button-6',
+    name: '펄스 물결 버튼',
+    category: '인터랙티브 효과',
+    render: () => <PulseRippleButton>펄스 물결</PulseRippleButton>,
+  },
+  {
+    id: 'interactive-button-7',
+    name: '키네틱 에너지 버튼',
+    category: '인터랙티브 효과',
+    render: () => <KineticButton>클릭해보세요</KineticButton>,
+  },
+
+  // 새로운 창의적 디자인 버튼들
+  {
+    id: 'creative-button-1',
+    name: '스케치 스타일',
+    category: '창의적 디자인',
+    render: () => <SketchButton>스케치 느낌</SketchButton>,
+  },
+  {
+    id: 'creative-button-2',
+    name: '포스트잇 메모',
+    category: '창의적 디자인',
+    render: () => <PaperNoteButton>메모 노트</PaperNoteButton>,
+  },
+  {
+    id: 'creative-button-3',
+    name: '미니멀 그라데이션',
+    category: '창의적 디자인',
+    render: () => <MinimalGradientButton>그라데이션</MinimalGradientButton>,
+  },
+  {
+    id: 'creative-button-4',
+    name: '슬라이딩 배경',
+    category: '창의적 디자인',
+    render: () => <SlidingBackgroundButton>슬라이딩</SlidingBackgroundButton>,
+  },
+  {
+    id: 'creative-button-5',
+    name: '메탈릭 버튼',
+    category: '창의적 디자인',
+    render: () => <MetallicButton>메탈릭</MetallicButton>,
+  },
+  {
+    id: 'creative-button-6',
+    name: '텍스트 확대 버튼',
+    category: '창의적 디자인',
+    render: () => <TextScaleButton>확대 효과</TextScaleButton>,
+  },
+  {
+    id: 'creative-button-7',
+    name: '인기 항목 버튼',
+    category: '창의적 디자인',
+    render: () => <HotItemButton>인기상품</HotItemButton>,
+  },
+  {
+    id: 'creative-button-8',
+    name: '테두리 효과',
+    category: '창의적 디자인',
+    render: () => <InteractiveBorderButton>테두리 효과</InteractiveBorderButton>,
   },
 ];
 
 export const ButtonExamplePage = () => {
   const [activeFilter, setActiveFilter] = useState<string>('전체');
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   useEffect(() => {
     // 글리치 버튼에 data-content 속성 추가
     const glitchButtons = document.querySelectorAll('.btn-glitch');
@@ -348,7 +476,7 @@ export const ButtonExamplePage = () => {
         btn.setAttribute('data-content', btn.textContent);
       }
     });
-    
+
     // 글리치 애니메이션 버튼에 data-content 속성 추가
     const glitchAnimButtons = document.querySelectorAll('.btn-animation-glitch');
     glitchAnimButtons.forEach((btn) => {
@@ -360,7 +488,7 @@ export const ButtonExamplePage = () => {
       }
     });
   }, []);
-  
+
   const categories = useMemo(() => [
     '전체',
     '기본 타입',
@@ -382,23 +510,25 @@ export const ButtonExamplePage = () => {
     '특수 조합',
     'Lottie 애니메이션',
     '동적 애니메이션',
+    '인터랙티브 효과',
+    '창의적 디자인',
   ], []);
 
   const buttonInfos = useMemo(() => {
     let filteredButtons = BUTTON_DATA;
-    
+
     // 카테고리 필터링
     if (activeFilter !== '전체') {
       filteredButtons = filteredButtons.filter(button => button.category === activeFilter);
     }
-    
+
     // 검색어 필터링
     if (searchTerm.trim() !== '') {
-      filteredButtons = filteredButtons.filter(button => 
+      filteredButtons = filteredButtons.filter(button =>
         button.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
+
     return filteredButtons;
   }, [activeFilter, searchTerm]);
 
@@ -409,24 +539,24 @@ export const ButtonExamplePage = () => {
   return (
     <div className="button-example-page">
       <h1>버튼 도감</h1>
-      
+
       {/* 검색 및 필터 영역 */}
       <div className="button-filters">
         <div className="search-box">
-          <input 
-            type="text" 
-            placeholder="버튼 이름으로 검색..." 
+          <input
+            type="text"
+            placeholder="버튼 이름으로 검색..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        
+
         <div className="filter-section">
           <h3>카테고리</h3>
           <div className="filter-controls">
             {categories.map(category => (
-              <span 
-                key={category} 
+              <span
+                key={category}
                 className={`filter-tag ${activeFilter === category ? 'active' : ''}`}
                 onClick={() => handleFilterClick(category)}
                 data-category={category}
@@ -434,15 +564,15 @@ export const ButtonExamplePage = () => {
                 {category}
               </span>
             ))}
+          </div>
         </div>
-        </div>
-        </div>
-      
+      </div>
+
       {/* 메인 버튼 그리드 */}
       <div className="button-grid">
         {buttonInfos.map(button => (
-          <div 
-            key={button.id} 
+          <div
+            key={button.id}
             className="button-item"
             data-id={button.id}
             data-category={button.category}
@@ -470,8 +600,8 @@ export const ButtonExamplePage = () => {
             <div className="button-category">{button.category}</div>
           </div>
         ))}
-        </div>
-      
+      </div>
+
       <footer className="pokedex-footer">
         버튼 도감 v1.0 - 총 {BUTTON_DATA.length}종의 버튼을 모두 수집해보세요!
       </footer>
