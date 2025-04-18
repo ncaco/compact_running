@@ -464,6 +464,479 @@ const STUDY_DATA: Unit[] = [
         <li><strong>저코드/노코드 개발</strong>: Microsoft Power Apps, OutSystems, Mendix</li>
       </ul>
     `
+  },
+  {
+    id: 'unit10',
+    title: '10. SQL 및 데이터 모델링',
+    content: `
+      <h3>10.1 SQL 주요 명령어</h3>
+      <p>SQL(Structured Query Language)은 데이터베이스 관리를 위한 표준 언어입니다.</p>
+      
+      <h4>데이터 정의어(DDL: Data Definition Language)</h4>
+      <ul>
+        <li><strong>CREATE</strong>: 테이블, 뷰, 인덱스 등 데이터베이스 객체 생성</li>
+        <li><strong>ALTER</strong>: 테이블 구조 변경 (컬럼 추가, 삭제, 자료형 변경 등)</li>
+        <li><strong>DROP</strong>: 테이블, 뷰, 인덱스 등 데이터베이스 객체 삭제</li>
+        <li><strong>TRUNCATE</strong>: 테이블의 모든 데이터 삭제 (테이블 구조는 유지)</li>
+      </ul>
+      
+      <h4>데이터 조작어(DML: Data Manipulation Language)</h4>
+      <ul>
+        <li><strong>SELECT</strong>: 데이터 조회</li>
+        <li><strong>INSERT</strong>: 데이터 삽입</li>
+        <li><strong>UPDATE</strong>: 데이터 수정</li>
+        <li><strong>DELETE</strong>: 데이터 삭제</li>
+      </ul>
+      
+      <h4>데이터 제어어(DCL: Data Control Language)</h4>
+      <ul>
+        <li><strong>GRANT</strong>: 사용자에게 권한 부여</li>
+        <li><strong>REVOKE</strong>: 사용자의 권한 취소</li>
+      </ul>
+      
+      <h4>트랜잭션 제어어(TCL: Transaction Control Language)</h4>
+      <ul>
+        <li><strong>COMMIT</strong>: 트랜잭션 확정</li>
+        <li><strong>ROLLBACK</strong>: 트랜잭션 취소, 이전 상태로 복원</li>
+        <li><strong>SAVEPOINT</strong>: 트랜잭션 내 특정 지점 저장</li>
+      </ul>
+      
+      <h3>10.2 JOIN의 종류</h3>
+      <table>
+        <tr>
+          <th>JOIN 종류</th>
+          <th>설명</th>
+        </tr>
+        <tr>
+          <td>INNER JOIN</td>
+          <td>두 테이블에서 조인 조건을 만족하는 행만 결과에 포함</td>
+        </tr>
+        <tr>
+          <td>LEFT JOIN</td>
+          <td>왼쪽 테이블의 모든 행과 오른쪽 테이블에서 조인 조건을 만족하는 행 포함</td>
+        </tr>
+        <tr>
+          <td>RIGHT JOIN</td>
+          <td>오른쪽 테이블의 모든 행과 왼쪽 테이블에서 조인 조건을 만족하는 행 포함</td>
+        </tr>
+        <tr>
+          <td>FULL JOIN</td>
+          <td>양쪽 테이블의 모든 행을 포함 (조인 조건을 만족하지 않는 행도 포함)</td>
+        </tr>
+        <tr>
+          <td>CROSS JOIN</td>
+          <td>두 테이블의 모든 행을 조합한 카테시안 곱(Cartesian Product) 생성</td>
+        </tr>
+      </table>
+      
+      <h3>10.3 SQL 함수</h3>
+      <h4>집계 함수</h4>
+      <ul>
+        <li><strong>COUNT()</strong>: 행 수 계산</li>
+        <li><strong>SUM()</strong>: 합계 계산</li>
+        <li><strong>AVG()</strong>: 평균 계산</li>
+        <li><strong>MAX()</strong>: 최대값 검색</li>
+        <li><strong>MIN()</strong>: 최소값 검색</li>
+      </ul>
+      
+      <h4>문자열 함수</h4>
+      <ul>
+        <li><strong>CONCAT()</strong>: 문자열 연결</li>
+        <li><strong>SUBSTRING()</strong>: 문자열 일부 추출</li>
+        <li><strong>LENGTH()</strong>: 문자열 길이 반환</li>
+        <li><strong>UPPER()</strong>: 대문자로 변환</li>
+        <li><strong>LOWER()</strong>: 소문자로 변환</li>
+      </ul>
+    `
+  },
+  {
+    id: 'unit11',
+    title: '11. 소프트웨어 공학',
+    content: `
+      <h3>11.1 소프트웨어 개발 방법론</h3>
+      
+      <h4>폭포수 모델(Waterfall Model)</h4>
+      <ul>
+        <li>순차적인 소프트웨어 개발 프로세스</li>
+        <li>각 단계가 완료된 후에 다음 단계로 진행</li>
+        <li>단계: 요구사항 분석 → 설계 → 구현 → 테스트 → 유지보수</li>
+        <li>장점: 단계별 산출물이 명확함</li>
+        <li>단점: 요구사항 변경에 대응하기 어려움</li>
+      </ul>
+      
+      <h4>애자일 방법론(Agile Methodology)</h4>
+      <ul>
+        <li>유연하고 반복적인 개발 접근 방식</li>
+        <li>짧은 개발 주기(스프린트)를 통한 지속적인 가치 제공</li>
+        <li>스크럼(Scrum)과 익스트림 프로그래밍(XP) 등이 대표적</li>
+        <li>장점: 변경에 빠르게 대응, 고객 참여 증가</li>
+        <li>단점: 문서화가 부족할 수 있음</li>
+      </ul>
+      
+      <h4>프로토타입 모델(Prototype Model)</h4>
+      <ul>
+        <li>초기 모델을 개발한 후 점진적으로 개선하는 방식</li>
+        <li>사용자 요구사항을 명확히 파악하기 위해 활용</li>
+        <li>장점: 사용자 피드백 반영이 용이함</li>
+        <li>단점: 불필요한 기능을 포함할 위험 있음</li>
+      </ul>
+      
+      <h3>11.2 UML(Unified Modeling Language)</h3>
+      <p>UML은 시스템 설계와 모델링을 위한 표준화된 표기법입니다.</p>
+      
+      <h4>주요 UML 다이어그램</h4>
+      <table>
+        <tr>
+          <th>다이어그램</th>
+          <th>설명</th>
+        </tr>
+        <tr>
+          <td>클래스 다이어그램</td>
+          <td>클래스, 속성, 메서드, 관계 등 정적 구조 표현</td>
+        </tr>
+        <tr>
+          <td>객체 다이어그램</td>
+          <td>객체 간의 관계를 표현한 스냅샷</td>
+        </tr>
+        <tr>
+          <td>유스케이스 다이어그램</td>
+          <td>시스템과 외부 액터 간의 상호작용 표현</td>
+        </tr>
+        <tr>
+          <td>시퀀스 다이어그램</td>
+          <td>시간 순서에 따른 객체 간 상호작용 표현</td>
+        </tr>
+        <tr>
+          <td>상태 다이어그램</td>
+          <td>객체의 상태 변화를 표현</td>
+        </tr>
+        <tr>
+          <td>활동 다이어그램</td>
+          <td>시스템 내의 워크플로우를 표현</td>
+        </tr>
+        <tr>
+          <td>컴포넌트 다이어그램</td>
+          <td>컴포넌트 간의 의존성 표현</td>
+        </tr>
+        <tr>
+          <td>배포 다이어그램</td>
+          <td>시스템 하드웨어 컴포넌트 표현</td>
+        </tr>
+      </table>
+      
+      <h3>11.3 요구사항 분석</h3>
+      <h4>요구사항의 종류</h4>
+      <ul>
+        <li><strong>기능적 요구사항</strong>: 시스템이 수행해야 할 기능</li>
+        <li><strong>비기능적 요구사항</strong>: 성능, 보안, 사용성 등 품질 관련 요구사항</li>
+        <li><strong>도메인 요구사항</strong>: 업무 영역과 관련된 요구사항</li>
+      </ul>
+      
+      <h4>요구사항 개발 프로세스</h4>
+      <ol>
+        <li><strong>도출(Elicitation)</strong>: 이해관계자와의 인터뷰, 설문, 관찰 등을 통해 요구사항 수집</li>
+        <li><strong>분석(Analysis)</strong>: 수집된 요구사항 검토, 분류, 우선순위화</li>
+        <li><strong>명세화(Specification)</strong>: 요구사항을 명확하게 문서화</li>
+        <li><strong>검증(Validation)</strong>: 명세화된 요구사항이 이해관계자의 의도를 맞는지 확인</li>
+      </ol>
+    `
+  },
+  {
+    id: 'unit12',
+    title: '12. 정보보안',
+    content: `
+      <h3>12.1 네트워크 보안</h3>
+      
+      <h4>방화벽(Firewall)</h4>
+      <p>네트워크 트래픽을 모니터링하고 제어하는 시스템</p>
+      <ul>
+        <li><strong>패킷 필터링 방화벽</strong>: TCP/IP 패킷 헤더 정보 기반 필터링</li>
+        <li><strong>상태 추적 방화벽</strong>: 연결 상태를 추적하여 검사</li>
+        <li><strong>애플리케이션 게이트웨이</strong>: 특정 애플리케이션 프로토콜 검사</li>
+        <li><strong>차세대 방화벽(NGFW)</strong>: IPS, 안티바이러스, 애플리케이션 컨트롤 등 통합</li>
+      </ul>
+      
+      <h4>침입 탐지 시스템(IDS: Intrusion Detection System)</h4>
+      <p>네트워크 또는 시스템에서 비정상적인 활동이나 침입을 탐지</p>
+      <ul>
+        <li><strong>네트워크 기반 IDS(NIDS)</strong>: 네트워크 트래픽 분석</li>
+        <li><strong>호스트 기반 IDS(HIDS)</strong>: 호스트 시스템 로그 및 활동 분석</li>
+        <li><strong>시그니처 기반 탐지</strong>: 알려진 공격 패턴과 비교</li>
+        <li><strong>이상 탐지</strong>: 정상 행동에서 벗어난 패턴 탐지</li>
+      </ul>
+      
+      <h4>가상 사설 네트워크(VPN: Virtual Private Network)</h4>
+      <p>공용 네트워크를 통해 암호화된 사설 네트워크 연결 제공</p>
+      <ul>
+        <li><strong>IPsec VPN</strong>: IP 계층에서 암호화</li>
+        <li><strong>SSL/TLS VPN</strong>: 웹 브라우저를 통한 접근</li>
+        <li><strong>사이트 간 VPN</strong>: 여러 사이트 간의 연결</li>
+        <li><strong>원격 접속 VPN</strong>: 개별 사용자와 네트워크 간의 연결</li>
+      </ul>
+      
+      <h3>12.2 주요 공격 기법</h3>
+      
+      <h4>DDoS(Distributed Denial of Service) 공격</h4>
+      <p>다수의 시스템에서 동시에 목표 시스템으로 대량의 트래픽을 발생시켜 서비스를 마비시키는 공격</p>
+      <ul>
+        <li><strong>볼류메트릭 공격</strong>: 대역폭 소진 (예: UDP 플러드)</li>
+        <li><strong>프로토콜 공격</strong>: 서버 리소스 소진 (예: SYN 플러드)</li>
+        <li><strong>애플리케이션 계층 공격</strong>: 애플리케이션 취약점 공격 (예: HTTP 플러드)</li>
+      </ul>
+      
+      <h4>SQL 인젝션(SQL Injection)</h4>
+      <p>입력 데이터에 악의적인 SQL 코드를 삽입하여 데이터베이스를 조작하는 공격</p>
+      <ul>
+        <li><strong>Error-based</strong>: 오류 메시지를 통한 정보 수집</li>
+        <li><strong>Union-based</strong>: UNION 연산자를 이용한 데이터 추출</li>
+        <li><strong>Blind</strong>: 직접적인 출력 없이 정보 추론</li>
+        <li><strong>Time-based</strong>: 응답 시간을 분석하여 정보 추론</li>
+      </ul>
+      
+      <h4>XSS(Cross-Site Scripting)</h4>
+      <p>웹 페이지에 악성 스크립트를 삽입하여 사용자 브라우저에서 실행되게 하는 공격</p>
+      <ul>
+        <li><strong>저장형 XSS</strong>: 악성 스크립트를 서버에 저장하여 여러 사용자에게 영향</li>
+        <li><strong>반사형 XSS</strong>: URL 매개변수 등을 통해 일시적으로 삽입</li>
+        <li><strong>DOM 기반 XSS</strong>: 클라이언트 측 스크립트를 통해 DOM 환경 변경</li>
+      </ul>
+      
+      <h3>12.3 암호화 알고리즘</h3>
+      
+      <h4>해시 함수 특징</h4>
+      <ul>
+        <li><strong>일방향성</strong>: 해시값에서 원본 메시지를 복원할 수 없음</li>
+        <li><strong>결정성</strong>: 같은 입력은 항상 같은 해시값 생성</li>
+        <li><strong>충돌 저항성</strong>: 서로 다른 입력이 같은 해시값을 생성하기 어려움</li>
+        <li><strong>눈사태 효과</strong>: 입력의 작은 변화도 출력에 큰 변화 초래</li>
+      </ul>
+      
+      <h4>공개키 암호화 특징</h4>
+      <ul>
+        <li><strong>키 쌍</strong>: 공개키와 개인키 사용</li>
+        <li><strong>비대칭성</strong>: 암호화와 복호화에 서로 다른 키 사용</li>
+        <li><strong>디지털 서명</strong>: 개인키로 서명, 공개키로 검증</li>
+        <li><strong>키 교환 문제 해결</strong>: 사전에 안전한 키 교환 없이도 통신 가능</li>
+      </ul>
+    `
+  },
+  {
+    id: 'unit13',
+    title: '13. 시스템 구조와 아키텍처',
+    content: `
+      <h3>13.1 시스템 아키텍처 종류</h3>
+      
+      <h4>클라이언트-서버 아키텍처</h4>
+      <ul>
+        <li>클라이언트가 서버에 서비스를 요청하고 서버가 응답하는 구조</li>
+        <li>서버는 여러 클라이언트의 요청을 처리하고 리소스를 공유</li>
+        <li>장점: 중앙 집중식 데이터 관리, 보안성 강화</li>
+        <li>단점: 서버 장애 시 전체 시스템 영향</li>
+      </ul>
+      
+      <h4>3계층 아키텍처</h4>
+      <ul>
+        <li><strong>프레젠테이션 계층</strong>: 사용자 인터페이스와 UI 로직 담당</li>
+        <li><strong>비즈니스 계층</strong>: 업무 처리 로직 담당</li>
+        <li><strong>데이터 계층</strong>: 데이터 저장 및 접근 담당</li>
+        <li>장점: 책임 분리, 유지보수 용이, 확장성 향상</li>
+      </ul>
+      
+      <h4>마이크로서비스 아키텍처</h4>
+      <ul>
+        <li>애플리케이션을 독립적으로 배포 가능한 작은 서비스로 분리</li>
+        <li>서비스마다 자체 데이터베이스와 비즈니스 로직을 가짐</li>
+        <li>장점: 독립적 배포, 확장성, 장애 격리</li>
+        <li>단점: 분산 시스템 복잡성, 네트워크 오버헤드</li>
+      </ul>
+      
+      <h3>13.2 아키텍처 설계 원칙</h3>
+      <ul>
+        <li><strong>관심사 분리(Separation of Concerns)</strong>: 시스템을 독립적인 모듈로 분리하여 복잡성 관리</li>
+        <li><strong>단일 책임 원칙(Single Responsibility)</strong>: 하나의 컴포넌트는 하나의 책임만 가져야 함</li>
+        <li><strong>추상화(Abstraction)</strong>: 복잡한 시스템을 간소화된 모델로 표현</li>
+        <li><strong>캡슐화(Encapsulation)</strong>: 내부 구현을 숨기고 인터페이스만 노출</li>
+        <li><strong>인터페이스 분리(Interface Segregation)</strong>: 클라이언트는 불필요한 인터페이스에 의존하지 않아야 함</li>
+      </ul>
+      
+      <h3>13.3 클라우드 컴퓨팅</h3>
+      <h4>서비스 모델</h4>
+      <ul>
+        <li><strong>IaaS(Infrastructure as a Service)</strong>: 가상 머신, 스토리지 등 인프라 제공</li>
+        <li><strong>PaaS(Platform as a Service)</strong>: 애플리케이션 개발 및 배포를 위한 플랫폼 제공</li>
+        <li><strong>SaaS(Software as a Service)</strong>: 완전한 소프트웨어 애플리케이션 제공</li>
+        <li><strong>FaaS(Function as a Service)</strong>: 서버리스 환경에서 개별 함수 실행</li>
+      </ul>
+      
+      <h4>배포 모델</h4>
+      <ul>
+        <li><strong>퍼블릭 클라우드</strong>: 서비스 제공자가 인터넷을 통해 리소스 제공</li>
+        <li><strong>프라이빗 클라우드</strong>: 단일 조직을 위한 전용 클라우드 환경</li>
+        <li><strong>하이브리드 클라우드</strong>: 퍼블릭과 프라이빗 클라우드의 조합</li>
+        <li><strong>멀티 클라우드</strong>: 여러 클라우드 제공자의 서비스 활용</li>
+      </ul>
+    `
+  },
+  {
+    id: 'unit14',
+    title: '14. 애플리케이션 성능 및 최적화',
+    content: `
+      <h3>14.1 성능 측정 지표</h3>
+      <ul>
+        <li><strong>응답 시간(Response Time)</strong>: 요청에서 응답까지의 소요 시간</li>
+        <li><strong>처리량(Throughput)</strong>: 단위 시간당 처리할 수 있는 작업량</li>
+        <li><strong>지연 시간(Latency)</strong>: 작업 시작부터 실제 처리 시작까지의 시간</li>
+        <li><strong>자원 사용률(Resource Utilization)</strong>: CPU, 메모리, 디스크 등의 사용률</li>
+        <li><strong>확장성(Scalability)</strong>: 부하 증가에 따른 성능 변화</li>
+      </ul>
+      
+      <h3>14.2 성능 최적화 기법</h3>
+      
+      <h4>웹 성능 최적화</h4>
+      <ul>
+        <li><strong>캐싱(Caching)</strong>: 자주 사용되는 데이터를 임시 저장소에 보관</li>
+        <li><strong>압축(Compression)</strong>: 전송 데이터 크기 축소 (GZIP, Brotli 등)</li>
+        <li><strong>이미지 최적화</strong>: 적절한 포맷 선택, 압축, Lazy Loading</li>
+        <li><strong>CDN(Content Delivery Network) 활용</strong>: 지리적으로 분산된 서버로 콘텐츠 제공</li>
+        <li><strong>코드 분할(Code Splitting)</strong>: 필요한 코드만 로드하여 초기 로딩 시간 단축</li>
+      </ul>
+      
+      <h4>데이터베이스 최적화</h4>
+      <ul>
+        <li><strong>인덱싱(Indexing)</strong>: 데이터 검색 속도 향상</li>
+        <li><strong>쿼리 최적화</strong>: 효율적인 쿼리 작성, 실행 계획 분석</li>
+        <li><strong>정규화와 비정규화</strong>: 상황에 맞는 데이터 모델 설계</li>
+        <li><strong>파티셔닝(Partitioning)</strong>: 대용량 테이블을 작은 단위로 분할</li>
+        <li><strong>샤딩(Sharding)</strong>: 데이터를 여러 데이터베이스에 분산 저장</li>
+      </ul>
+      
+      <h4>서버 성능 최적화</h4>
+      <ul>
+        <li><strong>로드 밸런싱(Load Balancing)</strong>: 요청을 여러 서버에 분산</li>
+        <li><strong>비동기 처리</strong>: 필요한 경우 작업을 비동기로 처리</li>
+        <li><strong>커넥션 풀링(Connection Pooling)</strong>: 연결 객체를 재사용하여 오버헤드 감소</li>
+        <li><strong>스케일 아웃/스케일 업</strong>: 서버 추가 또는 성능 향상</li>
+      </ul>
+      
+      <h3>14.3 애플리케이션 모니터링</h3>
+      <h4>모니터링 대상</h4>
+      <ul>
+        <li><strong>인프라 모니터링</strong>: 서버, 네트워크, 스토리지 등의 하드웨어 자원</li>
+        <li><strong>애플리케이션 모니터링</strong>: 응답 시간, 오류율, 처리량 등</li>
+        <li><strong>로그 모니터링</strong>: 애플리케이션 및 시스템 로그 분석</li>
+        <li><strong>사용자 경험 모니터링</strong>: 실제 사용자 관점에서의 성능 측정</li>
+      </ul>
+      
+      <h4>주요 모니터링 도구</h4>
+      <ul>
+        <li><strong>APM(Application Performance Management)</strong>: New Relic, Datadog, Dynatrace</li>
+        <li><strong>시스템 모니터링</strong>: Nagios, Zabbix, Prometheus</li>
+        <li><strong>로그 분석</strong>: ELK Stack(Elasticsearch, Logstash, Kibana), Graylog</li>
+        <li><strong>RUM(Real User Monitoring)</strong>: Google Analytics, Pingdom</li>
+      </ul>
+    `
+  },
+  {
+    id: 'unit15',
+    title: '15. TCP/IP와 네트워크',
+    content: `
+      <h3>15.1 OSI 7계층과 TCP/IP 4계층</h3>
+      <table>
+        <tr>
+          <th>OSI 7계층</th>
+          <th>TCP/IP 4계층</th>
+          <th>주요 프로토콜/기능</th>
+        </tr>
+        <tr>
+          <td>응용 계층</td>
+          <td rowspan="3">응용 계층</td>
+          <td>HTTP, FTP, SMTP, DNS</td>
+        </tr>
+        <tr>
+          <td>표현 계층</td>
+          <td>SSL/TLS, MIME, 인코딩</td>
+        </tr>
+        <tr>
+          <td>세션 계층</td>
+          <td>NetBIOS, RPC</td>
+        </tr>
+        <tr>
+          <td>전송 계층</td>
+          <td>전송 계층</td>
+          <td>TCP, UDP</td>
+        </tr>
+        <tr>
+          <td>네트워크 계층</td>
+          <td>인터넷 계층</td>
+          <td>IP, ICMP, ARP, RARP</td>
+        </tr>
+        <tr>
+          <td>데이터 링크 계층</td>
+          <td rowspan="2">네트워크 액세스 계층</td>
+          <td>Ethernet, PPP, HDLC</td>
+        </tr>
+        <tr>
+          <td>물리 계층</td>
+          <td>전기적, 물리적 특성</td>
+        </tr>
+      </table>
+      
+      <h3>15.2 주요 프로토콜</h3>
+      
+      <h4>TCP(Transmission Control Protocol)</h4>
+      <ul>
+        <li>연결 지향적 프로토콜</li>
+        <li>데이터의 순서와 신뢰성 보장</li>
+        <li>3-way handshake를 통한 연결 설정</li>
+        <li>흐름 제어와 혼잡 제어 제공</li>
+        <li>주요 응용: 웹(HTTP), 이메일(SMTP), 파일 전송(FTP)</li>
+      </ul>
+      
+      <h4>UDP(User Datagram Protocol)</h4>
+      <ul>
+        <li>비연결형 프로토콜</li>
+        <li>데이터 전송의 신뢰성 보장하지 않음</li>
+        <li>오버헤드가 적고 전송 속도가 빠름</li>
+        <li>주요 응용: DNS, 스트리밍 미디어, 온라인 게임</li>
+      </ul>
+      
+      <h4>IP(Internet Protocol)</h4>
+      <ul>
+        <li>인터넷에서 데이터 패킷을 전달하기 위한 프로토콜</li>
+        <li>IPv4: 32비트 주소 체계 (약 43억 개 주소)</li>
+        <li>IPv6: 128비트 주소 체계 (IPv4 고갈 문제 해결)</li>
+      </ul>
+      
+      <h3>15.3 네트워크 토폴로지</h3>
+      <ul>
+        <li><strong>버스형(Bus)</strong>: 단일 케이블에 모든 장치 연결, 구성 간단하나 장애 발생 시 전체 영향</li>
+        <li><strong>성형(Star)</strong>: 중앙 장치(스위치/허브)에 모든 장치 연결, 확장성 좋음</li>
+        <li><strong>링형(Ring)</strong>: 각 장치가 양옆의 장치와 연결, 데이터가 한 방향으로 순환</li>
+        <li><strong>메시형(Mesh)</strong>: 각 장치가 다른 여러 장치와 직접 연결, 높은 신뢰성과 복잡성</li>
+        <li><strong>트리형(Tree)</strong>: 계층적 구조, 성형의 확장형</li>
+      </ul>
+      
+      <h3>15.4 서브네팅(Subnetting)</h3>
+      <p>IP 주소 공간을 더 작은 서브넷으로 분할하는 방법</p>
+      <ul>
+        <li><strong>서브넷 마스크</strong>: 네트워크 부분과 호스트 부분을 구분하는 값</li>
+        <li><strong>CIDR(Classless Inter-Domain Routing)</strong>: 클래스 없는 라우팅 체계</li>
+        <li><strong>예시</strong>: 192.168.1.0/24는 192.168.1.0부터 192.168.1.255까지의 범위를 의미</li>
+      </ul>
+      
+      <h3>15.5 라우팅(Routing)</h3>
+      <p>네트워크 간에 데이터 패킷을 효율적으로 전송하기 위한 경로 결정</p>
+      <ul>
+        <li><strong>정적 라우팅</strong>: 수동으로 라우팅 테이블 설정</li>
+        <li><strong>동적 라우팅</strong>: 라우터 간 정보 교환으로 자동 업데이트</li>
+        <li><strong>라우팅 프로토콜</strong>: 
+          <ul>
+            <li>내부 게이트웨이 프로토콜(IGP): RIP, OSPF</li>
+            <li>외부 게이트웨이 프로토콜(EGP): BGP</li>
+          </ul>
+        </li>
+      </ul>
+    `
   }
 ];
 
@@ -474,6 +947,7 @@ export const StudyPage = () => {
   const timeoutRef = useRef<number | null>(null);
   const keyTimeoutRef = useRef<number | null>(null);
   const isKeyPressedRef = useRef<{[key: string]: boolean}>({});
+  const isKeyLongPressRef = useRef<{[key: string]: {isLongPress: boolean, frameCount: number}}>({});
   
   const handleUnitClick = (unitId: string) => {
     setActiveUnit(unitId);
@@ -484,8 +958,13 @@ export const StudyPage = () => {
   
   const goToNextUnit = () => {
     if (activeUnitIndex < STUDY_DATA.length - 1) {
+      // 키 상태를 유지하면서 프레임 카운트만 초기화
+      resetKeyStates(true);
+      
+      // 다음 단원으로 이동
       setActiveUnit(STUDY_DATA[activeUnitIndex + 1].id);
-      // 스크롤 위치를 맨 위로 초기화
+      
+      // 즉시 스크롤 맨 위로 초기화
       if (contentRef.current) {
         contentRef.current.scrollTop = 0;
       }
@@ -494,20 +973,48 @@ export const StudyPage = () => {
   
   const goToPrevUnit = () => {
     if (activeUnitIndex > 0) {
+      // 키 상태를 유지하면서 프레임 카운트만 초기화
+      resetKeyStates(true);
+      
+      // 이전 단원으로 이동
       setActiveUnit(STUDY_DATA[activeUnitIndex - 1].id);
-      // 스크롤 위치를 맨 아래로 이동
+      
+      // 이전 단원으로 이동 시에도 맨 위로 스크롤 설정
       if (contentRef.current) {
-        setTimeout(() => {
-          if (contentRef.current) {
-            contentRef.current.scrollTop = contentRef.current.scrollHeight;
-          }
-        }, 50);
+        contentRef.current.scrollTop = 0;
       }
     }
   };
   
+  // 키 입력 상태 초기화 함수 (스크롤 유지 옵션 추가)
+  const resetKeyStates = (preserveKeyState = false) => {
+    if (!preserveKeyState) {
+      // 모든 키 상태 초기화
+      isKeyPressedRef.current = {};
+    }
+    
+    // 롱프레스 프레임 카운트만 초기화 (키 상태는 옵션에 따라 유지될 수 있음)
+    Object.keys(isKeyLongPressRef.current).forEach(key => {
+      if (isKeyLongPressRef.current[key]) {
+        isKeyLongPressRef.current[key].frameCount = 0;
+      }
+    });
+    
+    // 진행 중인 타이머 제거 (단원 전환용 타이머만)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    
+    // 키 타이머는 보존 (키 계속 누름에 대한 처리 유지)
+    if (!preserveKeyState && keyTimeoutRef.current) {
+      clearTimeout(keyTimeoutRef.current);
+      keyTimeoutRef.current = null;
+    }
+  };
+  
   // 스크롤 위치 체크 함수
-  const checkScrollPosition = (element: HTMLElement): { isAtBottom: boolean, isAtTop: boolean } => {
+  const checkScrollPosition = (element: HTMLElement): { isAtBottom: boolean, isAtTop: boolean, isNearBottom: boolean } => {
     // 스크롤이 맨 아래에 도달했는지 확인
     const isAtBottom = 
       Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) < 5;
@@ -515,26 +1022,38 @@ export const StudyPage = () => {
     // 스크롤이 맨 위에 도달했는지 확인
     const isAtTop = element.scrollTop === 0;
     
-    return { isAtBottom, isAtTop };
+    // 스크롤이 하단 근처(90% 이상)에 있는지 확인
+    const isNearBottom = 
+      element.scrollTop > (element.scrollHeight - element.clientHeight) * 0.9;
+    
+    return { isAtBottom, isAtTop, isNearBottom };
   };
   
   // 방향키 스크롤 함수
-  const handleArrowScroll = (direction: 'up' | 'down', isLongPress: boolean = false) => {
+  const handleArrowScroll = (direction: 'up' | 'down') => {
     const contentElement = contentRef.current;
-    if (!contentElement) return;
+    if (!contentElement || !isKeyPressedRef.current[direction === 'up' ? 'ArrowUp' : 'ArrowDown']) return;
     
     const scrollAmount = 50; // 한 번에 스크롤할 양(px)
-    const { isAtBottom, isAtTop } = checkScrollPosition(contentElement);
+    const { isAtBottom, isAtTop, isNearBottom } = checkScrollPosition(contentElement);
+    
+    // 꾹 누르고 있을 때 자동으로 다음 단원으로 이동하기 위한 변수
+    const longPressScrollState = isKeyLongPressRef.current[direction];
     
     if (direction === 'down') {
-      if (isAtBottom) {
+      if (isAtBottom || (longPressScrollState && longPressScrollState.frameCount > 5 && isNearBottom)) {
         goToNextUnit();
       } else {
-        // 꾹 누를 때는 스무스 효과 제거하여 더 빠르고 자연스럽게 스크롤
+        // 슬라이스 애니메이션 제거하고 즉시 스크롤
         contentElement.scrollBy({ 
           top: scrollAmount, 
-          behavior: isLongPress ? 'auto' : 'smooth' 
+          behavior: 'auto' 
         });
+        
+        // 롱프레스 중이면 프레임 카운트 증가
+        if (longPressScrollState) {
+          longPressScrollState.frameCount++;
+        }
       }
     } else if (direction === 'up') {
       if (isAtTop) {
@@ -542,8 +1061,13 @@ export const StudyPage = () => {
       } else {
         contentElement.scrollBy({ 
           top: -scrollAmount, 
-          behavior: isLongPress ? 'auto' : 'smooth' 
+          behavior: 'auto' 
         });
+        
+        // 롱프레스 중이면 프레임 카운트 증가
+        if (longPressScrollState) {
+          longPressScrollState.frameCount++;
+        }
       }
     }
   };
@@ -558,16 +1082,15 @@ export const StudyPage = () => {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
         
+        const direction = e.key === 'ArrowDown' ? 'down' : 'up';
+        
         // 키 눌림 상태 기록 및 시작 시간 저장
         isKeyPressedRef.current[e.key] = true;
         keyPressStartTime[e.key] = Date.now();
+        isKeyLongPressRef.current[direction] = { isLongPress: false, frameCount: 0 };
         
         // 첫 누름에 대한 스크롤 처리
-        if (e.key === 'ArrowDown') {
-          handleArrowScroll('down');
-        } else if (e.key === 'ArrowUp') {
-          handleArrowScroll('up');
-        }
+        handleArrowScroll(direction);
         
         // 지속적인 키 누름 처리
         let elapsed = 0;
@@ -587,12 +1110,14 @@ export const StudyPage = () => {
             return; // 초기 지연 시간 동안은 스크롤하지 않음
           }
           
-          // 연속 스크롤로 전환 (0.4초 이후)
-          if (e.key === 'ArrowDown') {
-            handleArrowScroll('down', true);
-          } else if (e.key === 'ArrowUp') {
-            handleArrowScroll('up', true);
+          // 롱프레스 상태로 설정
+          if (isKeyLongPressRef.current[direction]) {
+            isKeyLongPressRef.current[direction].isLongPress = true;
           }
+          
+          // 연속 스크롤로 전환 (0.4초 이후)
+          handleArrowScroll(direction);
+          
         }, 30) as unknown as number; // 빠른 스크롤을 위해 30ms로 설정
         
         // 키를 놓을 때 clearInterval이 호출되지 않은 경우를 위한 안전장치
@@ -675,23 +1200,30 @@ export const StudyPage = () => {
       contentElement.addEventListener('wheel', handleWheel, { passive: false });
     }
     
+    // 컴포넌트 unmount 또는 단원 변경 시 모든 키 입력 상태 초기화
     return () => {
+      resetKeyStates();
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
       
       if (contentElement) {
         contentElement.removeEventListener('wheel', handleWheel);
       }
-      
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (keyTimeoutRef.current) clearTimeout(keyTimeoutRef.current);
     };
   }, [activeUnit, activeUnitIndex]);
   
-  // 단원 변경 시 스크롤 초기화
+  // 단원 변경 시 스크롤 초기화 (이중 안전장치)
   useEffect(() => {
     if (contentRef.current) {
+      // 강제로 스크롤을 맨 위로 초기화 (하지만 키 상태는 유지)
       contentRef.current.scrollTop = 0;
+      
+      // 레이아웃 계산 후에도 확실하게 맨 위로 스크롤 설정
+      setTimeout(() => {
+        if (contentRef.current) {
+          contentRef.current.scrollTop = 0;
+        }
+      }, 50);
     }
   }, [activeUnit]);
   

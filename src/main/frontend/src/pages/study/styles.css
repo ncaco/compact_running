@@ -68,7 +68,6 @@
   height: 100%;
   text-align: left;
   outline: none;
-  scroll-behavior: smooth;
 }
 
 .unit-content:focus {
