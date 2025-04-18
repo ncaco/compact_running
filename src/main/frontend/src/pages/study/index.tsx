@@ -937,6 +937,479 @@ const STUDY_DATA: Unit[] = [
         </li>
       </ul>
     `
+  },
+  {
+    id: 'unit16',
+    title: '16. 정보처리기사 실기 핵심 정리',
+    content: `
+      <h3>16.1 데이터베이스 핵심</h3>
+      
+      <h4>정규화 단계별 요약</h4>
+      <table>
+        <tr>
+          <th>정규화 단계</th>
+          <th>목적</th>
+          <th>예시</th>
+        </tr>
+        <tr>
+          <td>1NF</td>
+          <td>원자값을 가진 속성으로 구성</td>
+          <td>(학번, [전화번호1, 전화번호2]) → (학번, 전화번호)</td>
+        </tr>
+        <tr>
+          <td>2NF</td>
+          <td>부분적 함수 종속 제거</td>
+          <td>(주문번호+제품번호, 주문수량, 제품명) → (주문번호+제품번호, 주문수량) + (제품번호, 제품명)</td>
+        </tr>
+        <tr>
+          <td>3NF</td>
+          <td>이행적 함수 종속 제거</td>
+          <td>(학번, 학과코드, 학과명) → (학번, 학과코드) + (학과코드, 학과명)</td>
+        </tr>
+        <tr>
+          <td>BCNF</td>
+          <td>결정자가 후보키가 아닌 함수 종속 제거</td>
+          <td>(학번+과목번호, 교수번호, 성적), 교수번호→과목번호인 경우 분해</td>
+        </tr>
+      </table>
+      
+      <h4>SQL 중요 문법 정리</h4>
+      <ul>
+        <li><strong>DML 주요 쿼리</strong>:</li>
+      </ul>
+      <pre>
+-- SELECT 기본 구문과 조건절
+SELECT 컬럼명 [, 컬럼명, ...] FROM 테이블명 WHERE 조건;
+
+-- 정렬
+SELECT * FROM 학생 ORDER BY 성적 DESC, 이름 ASC;
+
+-- 그룹화 및 집계함수
+SELECT 학과, COUNT(*) AS 학생수, AVG(성적) AS 평균성적
+FROM 학생
+GROUP BY 학과
+HAVING AVG(성적) >= 80;
+
+-- JOIN 구문
+SELECT S.학번, S.이름, E.과목명, E.성적
+FROM 학생 S
+INNER JOIN 수강내역 E ON S.학번 = E.학번;
+
+-- INSERT 기본 구문
+INSERT INTO 테이블명 (컬럼1, 컬럼2, ...) VALUES (값1, 값2, ...);
+
+-- UPDATE 기본 구문
+UPDATE 테이블명 SET 컬럼명 = 값 WHERE 조건;
+
+-- DELETE 기본 구문
+DELETE FROM 테이블명 WHERE 조건;
+      </pre>
+      
+      <h4>트랜잭션과 인덱스 핵심 사항</h4>
+      <ul>
+        <li><strong>트랜잭션 격리 수준</strong>:
+          <ul>
+            <li>READ UNCOMMITTED: 다른 트랜잭션의 커밋되지 않은 데이터도 읽을 수 있음</li>
+            <li>READ COMMITTED: 커밋된 데이터만 읽을 수 있음 (대부분의 DBMS 기본값)</li>
+            <li>REPEATABLE READ: 트랜잭션 내에서 같은 쿼리는 항상 같은 결과 반환</li>
+            <li>SERIALIZABLE: 트랜잭션 완전 격리 (팬텀 리드 방지)</li>
+          </ul>
+        </li>
+        <li><strong>인덱스 생성 시 고려사항</strong>:
+          <ul>
+            <li>WHERE, JOIN, ORDER BY에 자주 사용되는 컬럼에 생성</li>
+            <li>데이터 중복도가 낮은(선택도가 높은) 컬럼에 생성</li>
+            <li>INSERT, UPDATE, DELETE가 자주 발생하는 테이블은 인덱스 최소화</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <h3>16.2 네트워크 핵심</h3>
+      
+      <h4>TCP/IP 프로토콜 스택</h4>
+      <table>
+        <tr>
+          <th>계층</th>
+          <th>프로토콜</th>
+          <th>주요 기능</th>
+        </tr>
+        <tr>
+          <td>응용 계층</td>
+          <td>HTTP, FTP, SMTP, DNS, DHCP</td>
+          <td>사용자/애플리케이션에 서비스 제공</td>
+        </tr>
+        <tr>
+          <td>전송 계층</td>
+          <td>TCP, UDP</td>
+          <td>종단간 연결, 신뢰성, 흐름제어</td>
+        </tr>
+        <tr>
+          <td>인터넷 계층</td>
+          <td>IP, ICMP, ARP</td>
+          <td>패킷 전달 및 라우팅</td>
+        </tr>
+        <tr>
+          <td>네트워크 액세스 계층</td>
+          <td>Ethernet, Wi-Fi</td>
+          <td>물리적 주소 지정 및 매체 액세스</td>
+        </tr>
+      </table>
+      
+      <h4>TCP vs UDP 비교</h4>
+      <table>
+        <tr>
+          <th>특성</th>
+          <th>TCP</th>
+          <th>UDP</th>
+        </tr>
+        <tr>
+          <td>연결 방식</td>
+          <td>연결형(3-way handshake)</td>
+          <td>비연결형</td>
+        </tr>
+        <tr>
+          <td>신뢰성</td>
+          <td>높음(ACK, 재전송)</td>
+          <td>낮음(오류 검출만)</td>
+        </tr>
+        <tr>
+          <td>순서 보장</td>
+          <td>보장함(순서번호)</td>
+          <td>보장하지 않음</td>
+        </tr>
+        <tr>
+          <td>속도</td>
+          <td>상대적으로 느림</td>
+          <td>빠름</td>
+        </tr>
+        <tr>
+          <td>사용 예</td>
+          <td>웹(HTTP), 이메일(SMTP)</td>
+          <td>스트리밍, DNS, VoIP</td>
+        </tr>
+      </table>
+      
+      <h4>서브네팅 계산법</h4>
+      <ul>
+        <li><strong>CIDR 표기법</strong>: 192.168.1.0/24는 서브넷 마스크가 255.255.255.0</li>
+        <li><strong>호스트 수 계산</strong>: 2^(32-prefix) - 2 (네트워크 주소와 브로드캐스트 주소 제외)</li>
+        <li><strong>예시</strong>: /27 서브넷은 2^(32-27) - 2 = 30개 호스트 수용 가능</li>
+      </ul>
+      
+      <h3>16.3 보안 핵심</h3>
+      
+      <h4>암호화 알고리즘 특징</h4>
+      <table>
+        <tr>
+          <th>종류</th>
+          <th>알고리즘</th>
+          <th>특징</th>
+          <th>용도</th>
+        </tr>
+        <tr>
+          <td rowspan="3">대칭키</td>
+          <td>AES</td>
+          <td>128/192/256비트 키 길이</td>
+          <td>데이터 암호화</td>
+        </tr>
+        <tr>
+          <td>DES</td>
+          <td>56비트 키(취약), 현재 사용 지양</td>
+          <td>레거시 시스템</td>
+        </tr>
+        <tr>
+          <td>3DES</td>
+          <td>DES를 3번 적용, 168비트 키</td>
+          <td>금융권 레거시</td>
+        </tr>
+        <tr>
+          <td rowspan="2">비대칭키</td>
+          <td>RSA</td>
+          <td>소인수분해 기반, 키 길이 2048비트 이상 권장</td>
+          <td>전자서명, 키 교환</td>
+        </tr>
+        <tr>
+          <td>ECC</td>
+          <td>타원곡선 기반, 짧은 키로 높은 보안성</td>
+          <td>모바일, IoT 장치</td>
+        </tr>
+        <tr>
+          <td rowspan="3">해시</td>
+          <td>MD5</td>
+          <td>128비트 해시, 충돌 취약점 발견</td>
+          <td>무결성 검사(비보안용)</td>
+        </tr>
+        <tr>
+          <td>SHA-1</td>
+          <td>160비트 해시, 현재 사용 지양</td>
+          <td>레거시 시스템</td>
+        </tr>
+        <tr>
+          <td>SHA-256</td>
+          <td>256비트 해시, 현재 표준</td>
+          <td>데이터 무결성, 인증</td>
+        </tr>
+      </table>
+      
+      <h4>주요 공격 기법 및 대응방안</h4>
+      <ul>
+        <li><strong>SQL 인젝션</strong>:
+          <ul>
+            <li>공격 예시: ' OR '1'='1</li>
+            <li>대응: 매개변수화 쿼리, 입력값 검증, ORM 사용</li>
+          </ul>
+        </li>
+        <li><strong>XSS(Cross-Site Scripting)</strong>:
+          <ul>
+            <li>공격 예시: &lt;script&gt;alert('XSS')&lt;/script&gt;</li>
+            <li>대응: 입력값 이스케이프, CSP(Content Security Policy) 설정</li>
+          </ul>
+        </li>
+        <li><strong>CSRF(Cross-Site Request Forgery)</strong>:
+          <ul>
+            <li>공격 방식: 사용자가 인증된 상태에서 악의적인 요청 유도</li>
+            <li>대응: CSRF 토큰, SameSite 쿠키, Referer 검증</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <h3>16.4 알고리즘 핵심</h3>
+      
+      <h4>정렬 알고리즘 시간복잡도 비교</h4>
+      <table>
+        <tr>
+          <th>알고리즘</th>
+          <th>최선</th>
+          <th>평균</th>
+          <th>최악</th>
+          <th>공간</th>
+          <th>안정성</th>
+        </tr>
+        <tr>
+          <td>버블 정렬</td>
+          <td>O(n)</td>
+          <td>O(n²)</td>
+          <td>O(n²)</td>
+          <td>O(1)</td>
+          <td>안정</td>
+        </tr>
+        <tr>
+          <td>선택 정렬</td>
+          <td>O(n²)</td>
+          <td>O(n²)</td>
+          <td>O(n²)</td>
+          <td>O(1)</td>
+          <td>불안정</td>
+        </tr>
+        <tr>
+          <td>삽입 정렬</td>
+          <td>O(n)</td>
+          <td>O(n²)</td>
+          <td>O(n²)</td>
+          <td>O(1)</td>
+          <td>안정</td>
+        </tr>
+        <tr>
+          <td>퀵 정렬</td>
+          <td>O(n log n)</td>
+          <td>O(n log n)</td>
+          <td>O(n²)</td>
+          <td>O(log n)</td>
+          <td>불안정</td>
+        </tr>
+        <tr>
+          <td>병합 정렬</td>
+          <td>O(n log n)</td>
+          <td>O(n log n)</td>
+          <td>O(n log n)</td>
+          <td>O(n)</td>
+          <td>안정</td>
+        </tr>
+        <tr>
+          <td>힙 정렬</td>
+          <td>O(n log n)</td>
+          <td>O(n log n)</td>
+          <td>O(n log n)</td>
+          <td>O(1)</td>
+          <td>불안정</td>
+        </tr>
+      </table>
+      
+      <h4>자료구조 시간복잡도</h4>
+      <table>
+        <tr>
+          <th>자료구조</th>
+          <th>접근</th>
+          <th>검색</th>
+          <th>삽입</th>
+          <th>삭제</th>
+        </tr>
+        <tr>
+          <td>배열</td>
+          <td>O(1)</td>
+          <td>O(n)</td>
+          <td>O(n)</td>
+          <td>O(n)</td>
+        </tr>
+        <tr>
+          <td>연결 리스트</td>
+          <td>O(n)</td>
+          <td>O(n)</td>
+          <td>O(1)</td>
+          <td>O(1)</td>
+        </tr>
+        <tr>
+          <td>스택</td>
+          <td>O(n)</td>
+          <td>O(n)</td>
+          <td>O(1)</td>
+          <td>O(1)</td>
+        </tr>
+        <tr>
+          <td>큐</td>
+          <td>O(n)</td>
+          <td>O(n)</td>
+          <td>O(1)</td>
+          <td>O(1)</td>
+        </tr>
+        <tr>
+          <td>해시 테이블</td>
+          <td>N/A</td>
+          <td>O(1) ~ O(n)</td>
+          <td>O(1) ~ O(n)</td>
+          <td>O(1) ~ O(n)</td>
+        </tr>
+        <tr>
+          <td>이진 탐색 트리</td>
+          <td>N/A</td>
+          <td>O(log n) ~ O(n)</td>
+          <td>O(log n) ~ O(n)</td>
+          <td>O(log n) ~ O(n)</td>
+        </tr>
+        <tr>
+          <td>AVL/레드블랙 트리</td>
+          <td>N/A</td>
+          <td>O(log n)</td>
+          <td>O(log n)</td>
+          <td>O(log n)</td>
+        </tr>
+      </table>
+      
+      <h4>주요 알고리즘 구현 코드</h4>
+      <pre>
+// 퀵 정렬 구현 (C언어)
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pivot = partition(arr, low, high);
+        quickSort(arr, low, pivot - 1);
+        quickSort(arr, pivot + 1, high);
+    }
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+// 이진 탐색 구현 (C언어)
+int binarySearch(int arr[], int low, int high, int key) {
+    if (high >= low) {
+        int mid = low + (high - low) / 2;
+        
+        if (arr[mid] == key)
+            return mid;
+        
+        if (arr[mid] > key)
+            return binarySearch(arr, low, mid - 1, key);
+        
+        return binarySearch(arr, mid + 1, high, key);
+    }
+    return -1; // 찾지 못한 경우
+}
+      </pre>
+      
+      <h3>16.5 소프트웨어 공학 핵심</h3>
+      
+      <h4>소프트웨어 개발 모델 비교</h4>
+      <table>
+        <tr>
+          <th>모델</th>
+          <th>특징</th>
+          <th>장점</th>
+          <th>단점</th>
+        </tr>
+        <tr>
+          <td>폭포수 모델</td>
+          <td>순차적 단계별 접근</td>
+          <td>계획과 문서화 용이</td>
+          <td>요구사항 변경 대응 어려움</td>
+        </tr>
+        <tr>
+          <td>프로토타입 모델</td>
+          <td>초기 모델 개발 후 개선</td>
+          <td>사용자 피드백 반영 용이</td>
+          <td>관리 어려움, 불필요한 기능 포함 위험</td>
+        </tr>
+        <tr>
+          <td>나선형 모델</td>
+          <td>위험 분석 중심, 점진적 개발</td>
+          <td>높은 위험 관리 능력</td>
+          <td>복잡성, 비용 높음</td>
+        </tr>
+        <tr>
+          <td>애자일 모델</td>
+          <td>반복적, 점진적 개발</td>
+          <td>변화 수용성 높음</td>
+          <td>문서화 부족, 예측 어려움</td>
+        </tr>
+        <tr>
+          <td>DevOps</td>
+          <td>개발과 운영 통합</td>
+          <td>빠른 배포, 지속적 통합</td>
+          <td>도구 의존성, 복잡한 환경 설정</td>
+        </tr>
+      </table>
+      
+      <h4>소프트웨어 테스트 기법</h4>
+      <ul>
+        <li><strong>블랙박스 테스트</strong>: 내부 구조 고려 없이 기능 테스트
+          <ul>
+            <li>동등분할: 입력 데이터를 동등한 클래스로 분할하여 테스트</li>
+            <li>경계값 분석: 경계 조건에서의 테스트</li>
+            <li>결정 테이블: 조건과 행동의 조합으로 테스트</li>
+          </ul>
+        </li>
+        <li><strong>화이트박스 테스트</strong>: 내부 구조 기반 테스트
+          <ul>
+            <li>구문 커버리지: 모든 코드 구문 실행 보장</li>
+            <li>결정 커버리지: 모든 분기점 테스트</li>
+            <li>조건 커버리지: 모든 개별 조건 테스트</li>
+            <li>경로 커버리지: 모든 가능한 경로 테스트</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <h4>소프트웨어 품질 특성 (ISO/IEC 25010)</h4>
+      <ul>
+        <li><strong>기능 적합성</strong>: 기능 완전성, 정확성, 적합성</li>
+        <li><strong>성능 효율성</strong>: 시간 효율성, 자원 효율성, 용량</li>
+        <li><strong>호환성</strong>: 공존성, 상호운용성</li>
+        <li><strong>사용성</strong>: 학습성, 운용성, 사용자 오류 방지, 인터페이스 심미성</li>
+        <li><strong>신뢰성</strong>: 성숙성, 가용성, 결함 허용성, 복구성</li>
+        <li><strong>보안성</strong>: 기밀성, 무결성, 부인 방지, 책임 추적성, 인증성</li>
+        <li><strong>유지보수성</strong>: 모듈성, 재사용성, 분석성, 수정성, 테스트성</li>
+        <li><strong>이식성</strong>: 적응성, 설치성, 대체성</li>
+      </ul>
+    `
   }
 ];
 
