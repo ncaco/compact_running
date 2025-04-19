@@ -265,7 +265,7 @@ export const KeywordPage: React.FC = () => {
     const element = document.getElementById(categoryId);
     if (element && containerRef.current) {
       containerRef.current.scrollTo({
-        top: element.offsetTop - 120,
+        top: element.offsetTop,
         behavior: 'smooth'
       });
     }
@@ -273,11 +273,20 @@ export const KeywordPage: React.FC = () => {
   
   // 키워드 클릭 핸들러
   const handleKeywordClick = (keyword: string) => {
+    // 이미 선택된 키워드와 같고 패널이 열려있으면 아무 작업도 하지 않음
+    if (selectedKeyword === keyword && document.querySelector('.detail-panel.open')) {
+      return;
+    }
+    
     setSelectedKeyword(keyword);
     const description = findKeywordDescription(keyword);
     if (description) {
       const detailPanel = document.querySelector('.detail-panel') as HTMLElement;
       if (detailPanel) {
+        // 패널이 이미 열려있으면 애니메이션 없이 클래스만 추가
+        if (detailPanel.classList.contains('open')) {
+          return;
+        }
         detailPanel.classList.add('open');
       }
     }
@@ -329,15 +338,24 @@ export const KeywordPage: React.FC = () => {
   }, []);
   
   const handleKeywordSelect = useCallback((keyword: string) => {
+    // 이미 선택된 키워드와 같고 패널이 열려있으면 아무 작업도 하지 않음
+    if (selectedKeyword === keyword && document.querySelector('.detail-panel.open')) {
+      return;
+    }
+    
     setSelectedKeyword(keyword);
     const description = findKeywordDescription(keyword);
     if (description) {
       const detailPanel = document.querySelector('.detail-panel') as HTMLElement;
       if (detailPanel) {
+        // 패널이 이미 열려있으면 애니메이션 없이 클래스만 추가
+        if (detailPanel.classList.contains('open')) {
+          return;
+        }
         detailPanel.classList.add('open');
       }
     }
-  }, []);
+  }, [selectedKeyword]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleEscKey);
@@ -372,9 +390,6 @@ export const KeywordPage: React.FC = () => {
             </button>
           )}
         </div>
-        <div className="sidebar-header">
-          <h3>카테고리</h3>
-        </div>
         <ul className="category-navigation-vertical">
           {KEYWORD_DATA.map((category, index) => (
             <li key={category.id}>
@@ -383,7 +398,7 @@ export const KeywordPage: React.FC = () => {
                 onClick={() => scrollToCategory(category.id)}
               >
                 {category.name}
-                <span className="keyword-count">{category.keywords.length}</span>
+                <span className="keyword-count">({category.keywords.length})</span>
               </button>
             </li>
           ))}
@@ -391,24 +406,6 @@ export const KeywordPage: React.FC = () => {
       </div>
 
       <div className="keyword-page" ref={containerRef} onScroll={handleScroll}>
-        <div className={`keyword-header ${isScrolled ? 'hidden' : ''}`}>
-          <h1>핵심 키워드</h1>
-          {searchQuery && (
-            <div className="search-info">
-              {searchResults.length > 0 ? (
-                <p>
-                  <strong>{searchResults.length}개</strong>의 키워드가 검색되었습니다.
-                </p>
-              ) : (
-                <p className="no-results">
-                  검색 결과가 없습니다.
-                  <button className="reset-search" onClick={handleClearSearch}>검색 초기화</button>
-                </p>
-              )}
-            </div>
-          )}
-        </div>
-        
         <div className="keyword-categories">
           {isSearching ? (
             <div className="search-results">

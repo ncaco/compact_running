@@ -325,7 +325,22 @@ export const KEYWORD_DESCRIPTIONS: KeywordDescription[] = [
   {
     keyword: 'JWT',
     description: 'JWT(JSON Web Token)는 당사자 간 정보를 JSON 객체로 안전하게 전송하기 위한 컴팩트하고 독립적인 방식을 정의하는 개방형 표준(RFC 7519)입니다. 디지털 서명을 통해 정보의 무결성을 검증할 수 있습니다.',
-    example: 'JWT 구조 (점으로 구분된 3개 부분):\n1. 헤더(Header): 토큰 유형과 서명 알고리즘 명시\n   {\"alg\": \"HS256\", \"typ\": \"JWT\"}\n\n2. 페이로드(Payload): 클레임(사용자 ID, 역할, 만료시간 등) 포함\n   {\"sub\": \"1234567890\", \"name\": \"홍길동\", \"role\": \"admin\", \"exp\": 1516239022}\n\n3. 서명(Signature): 헤더와 페이로드를 인코딩한 후 비밀키로 서명\n   HMACSHA256(base64UrlEncode(header) + \".\" + base64UrlEncode(payload), secret)\n\n예시 JWT: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U\n\n주요 사용 사례:\n- 인증 및 권한 관리\n- 정보 교환\n- API 인증',
+    example: `JWT 구조 (점으로 구분된 3개 부분):
+1. 헤더(Header): 토큰 유형과 서명 알고리즘 명시
+   {"alg": "HS256", "typ": "JWT"}
+
+2. 페이로드(Payload): 클레임(사용자 ID, 역할, 만료시간 등) 포함
+   {"sub": "1234567890", "name": "홍길동", "role": "admin", "exp": 1516239022}
+
+3. 서명(Signature): 헤더와 페이로드를 인코딩한 후 비밀키로 서명
+   HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret)
+
+예시 JWT: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U
+
+주요 사용 사례:
+- 인증 및 권한 관리
+- 정보 교환
+- API 인증`,
     relatedKeywords: ['토큰 기반 인증', 'JSON', '인증', '클레임', '무상태(Stateless)', 'OAuth', 'Base64']
   },
   {
@@ -361,7 +376,20 @@ export const KEYWORD_DESCRIPTIONS: KeywordDescription[] = [
   {
     keyword: 'IDS/IPS',
     description: 'IDS(침입 탐지 시스템)와 IPS(침입 방지 시스템)는 네트워크 또는 시스템에 대한 악의적인 활동을 모니터링하고 탐지하는 보안 도구입니다. IDS는 탐지만 하고 알림을 주는 반면, IPS는 추가로 이러한 활동을 차단하거나 방지하는 기능을 수행합니다.',
-    example: 'IDS/IPS 유형:\n1. 네트워크 기반(NIDS/NIPS): 네트워크 트래픽 분석\n2. 호스트 기반(HIDS/HIPS): 개별 호스트의 활동 모니터링\n\n탐지 방법:\n1. 시그니처 기반: 알려진 공격 패턴 매칭\n   - 예: Snort 규칙 "alert tcp any any -> 192.168.1.0/24 80 (content:\"/etc/passwd\"; msg:\"웹을 통한 패스워드 파일 접근 시도\";)"\n2. 이상 행동 기반: 정상 상태에서 벗어난 행동 탐지\n3. 정책 기반: 정의된 정책 위반 감지\n4. 휴리스틱 분석: 동작 패턴 학습 및 분석\n\nIDS와 IPS 비교:\n- IDS: 수동적, 탐지 후 알림만 제공 (네트워크 성능 영향 적음)\n- IPS: 능동적, 탐지 및 자동 대응 (네트워크 지연 가능성)',
+    example: `IDS/IPS 유형:
+1. 네트워크 기반(NIDS/NIPS): 네트워크 트래픽 분석
+2. 호스트 기반(HIDS/HIPS): 개별 호스트의 활동 모니터링
+
+탐지 방법:
+1. 시그니처 기반: 알려진 공격 패턴 매칭
+   - 예: Snort 규칙 "alert tcp any any -> 192.168.1.0/24 80 (content:"/etc/passwd"; msg:"웹을 통한 패스워드 파일 접근 시도";)"
+2. 이상 행동 기반: 정상 상태에서 벗어난 행동 탐지
+3. 정책 기반: 정의된 정책 위반 감지
+4. 휴리스틱 분석: 동작 패턴 학습 및 분석
+
+IDS와 IPS 비교:
+- IDS: 수동적, 탐지 후 알림만 제공 (네트워크 성능 영향 적음)
+- IPS: 능동적, 탐지 및 자동 대응 (네트워크 지연 가능성)`,
     relatedKeywords: ['네트워크 보안', '악성 트래픽 탐지', '침입 탐지', '침입 방지', '시그니처 기반 탐지', '이상 행동 탐지', 'Snort', 'Suricata']
   },
   {
@@ -459,6 +487,42 @@ export const KEYWORD_DESCRIPTIONS: KeywordDescription[] = [
     description: 'CI/CD(지속적 통합/지속적 배포)는 소프트웨어 개발 프로세스를 자동화하여 더 빠르고 안정적으로 코드를 빌드, 테스트, 배포하는 방법론입니다. CI(지속적 통합)는 개발자의 코드 변경사항을 정기적으로 통합하고 검증하며, CD(지속적 배포)는 검증된 코드를 자동으로 프로덕션 환경에 배포합니다.',
     example: 'CI(지속적 통합) 프로세스:\n1. 코드 변경사항을 버전 관리 시스템에 커밋\n2. 자동화된 빌드 시작\n3. 단위 테스트 실행\n4. 정적 코드 분석\n5. 통합 테스트 실행\n6. 결과 보고 및 피드백\n\nCD(지속적 배포) 프로세스:\n1. CI 프로세스 완료 후 시작\n2. 스테이징 환경에 배포\n3. 성능 테스트 및 사용자 수용 테스트\n4. 보안 검사\n5. 프로덕션 환경에 배포\n6. 모니터링 및 롤백 준비\n\nCI/CD 도구:\n- Jenkins: 오픈소스 자동화 서버\n- GitLab CI/CD: GitLab에 통합된 CI/CD 서비스\n- GitHub Actions: GitHub 저장소와 통합된 워크플로우\n- CircleCI: 클라우드 기반 CI/CD 플랫폼\n- Travis CI: 클라우드 기반 CI/CD 서비스\n- ArgoCD: 쿠버네티스용 GitOps 지속적 배포 도구\n\nCI/CD 이점:\n- 빠른 피드백 루프: 버그 조기 발견\n- 위험 감소: 작은 변경사항 단위로 배포\n- 생산성 향상: 수동 작업 감소\n- 일관된 배포 프로세스: 인적 오류 최소화',
     relatedKeywords: ['DevOps', '자동화', '파이프라인', 'Jenkins', 'GitOps', '테스트 자동화', '무중단 배포', '롤백', '블루-그린 배포']
+  },
+  {
+    keyword: '서블릿',
+    description: '서블릿(Servlet)은 자바 기반의 웹 애플리케이션 개발을 위한 서버 측 프로그래밍 기술입니다. 클라이언트의 요청을 처리하고 동적인 웹 콘텐츠를 생성하는 자바 클래스로, 웹 서버와 자바 애플리케이션 사이의 중개자 역할을 합니다.',
+    example: '기본적인 서블릿 구현 예시:\n```java\nimport javax.servlet.*;\nimport javax.servlet.http.*;\nimport java.io.*;\n\npublic class HelloServlet extends HttpServlet {\n    public void doGet(HttpServletRequest request, HttpServletResponse response)\n    throws ServletException, IOException {\n        response.setContentType("text/html");\n        PrintWriter out = response.getWriter();\n        out.println("<html><body>");\n        out.println("<h1>Hello, World!</h1>");\n        out.println("</body></html>");\n    }\n}\n```\n\n서블릿 생명주기:\n1. 초기화: init() 메서드 - 서블릿 인스턴스 생성 시 한 번 호출\n2. 서비스: service() 메서드 - 각 클라이언트 요청마다 호출 (doGet, doPost 등 호출)\n3. 소멸: destroy() 메서드 - 서블릿 종료 전 한 번 호출 (리소스 정리)\n\n서블릿 매핑 (web.xml):\n```xml\n<servlet>\n    <servlet-name>hello</servlet-name>\n    <servlet-class>HelloServlet</servlet-class>\n</servlet>\n<servlet-mapping>\n    <servlet-name>hello</servlet-name>\n    <url-pattern>/hello</url-pattern>\n</servlet-mapping>\n```',
+    relatedKeywords: ['Java EE', '웹 애플리케이션', 'JSP', '톰캣', 'HttpServlet', '서블릿 컨테이너', 'web.xml']
+  },
+  {
+    keyword: 'JSP',
+    description: 'JSP(JavaServer Pages)는 HTML 내에 자바 코드를 삽입하여 동적인 웹 페이지를 생성하는 서버 측 기술입니다. 서블릿을 확장한 기술로, HTML 코드 안에 자바 코드를 작성할 수 있어 프레젠테이션 로직 개발이 용이합니다.',
+    example: 'JSP 기본 문법 예시:\n```jsp\n<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\n<!DOCTYPE html>\n<html>\n<head>\n    <title>JSP 예제</title>\n</head>\n<body>\n    <h1>안녕하세요, JSP!</h1>\n    \n    <%-- 선언문 --%>\n    <%! int count = 0; %>\n    \n    <%-- 스크립틀릿 --%>\n    <% \n        count++;\n        String message = "방문 횟수: " + count;\n    %>\n    \n    <%-- 표현식 --%>\n    <p><%= message %></p>\n    \n    <%-- EL(Expression Language) --%>\n    <p>현재 시간: ${java.time.LocalDateTime.now()}</p>\n    \n    <%-- JSTL 사용 예시 --%>\n    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>\n    <c:if test="${count > 5}">\n        <p>여러 번 방문해주셔서 감사합니다!</p>\n    </c:if>\n</body>\n</html>\n```\n\nJSP 주요 구성 요소:\n1. 디렉티브(Directive): <%@ ... %> - 페이지 속성 설정\n2. 선언문(Declaration): <%! ... %> - 변수, 메서드 선언\n3. 스크립틀릿(Scriptlet): <% ... %> - 자바 코드 삽입\n4. 표현식(Expression): <%= ... %> - 값 출력\n5. EL(Expression Language): ${...} - 속성 값 출력\n6. 액션 태그: <jsp:...> - JSP 페이지 흐름 제어\n7. JSTL(JSP Standard Tag Library): 조건문, 반복문 등을 태그로 구현\n\nJSP 실행 과정:\n1. JSP 페이지 요청\n2. JSP 페이지가 서블릿 코드로 변환 (첫 요청 시)\n3. 서블릿 컴파일 및 클래스 로딩\n4. 서블릿 실행 및 HTML 응답 생성',
+    relatedKeywords: ['서블릿', 'Java EE', '웹 애플리케이션', 'JSTL', 'EL', 'MVC', '톰캣']
+  },
+  {
+    keyword: 'Spring Framework',
+    description: 'Spring Framework는 자바 기반의 엔터프라이즈 애플리케이션 개발을 위한 오픈 소스 프레임워크입니다. 의존성 주입(DI)과 제어 역전(IoC)을 핵심으로 하며, 모듈화된 아키텍처를 통해 웹 애플리케이션, 데이터 접근, 보안 등 다양한 기능을 제공합니다.',
+    example: 'Spring 핵심 컴포넌트:\n\n1. IoC 컨테이너 예시:\n```java\n// Bean 정의\n@Component\npublic class UserService {\n    private final UserRepository userRepository;\n    \n    // 생성자 주입\n    @Autowired\n    public UserService(UserRepository userRepository) {\n        this.userRepository = userRepository;\n    }\n    \n    public User findById(Long id) {\n        return userRepository.findById(id);\n    }\n}\n\n// 애플리케이션 컨텍스트 설정\n@Configuration\n@ComponentScan("com.example")\npublic class AppConfig {\n    // 설정 코드\n}\n```\n\n2. Spring MVC 예시:\n```java\n@Controller\n@RequestMapping("/users")\npublic class UserController {\n    private final UserService userService;\n    \n    public UserController(UserService userService) {\n        this.userService = userService;\n    }\n    \n    @GetMapping("/{id}")\n    public String getUser(@PathVariable Long id, Model model) {\n        User user = userService.findById(id);\n        model.addAttribute("user", user);\n        return "user/detail"; // view 이름\n    }\n    \n    @PostMapping\n    public String createUser(@ModelAttribute UserForm form) {\n        userService.save(form);\n        return "redirect:/users";\n    }\n}\n```\n\n3. Spring Data JPA 예시:\n```java\npublic interface UserRepository extends JpaRepository<User, Long> {\n    List<User> findByLastName(String lastName);\n    \n    @Query("SELECT u FROM User u WHERE u.email = :email")\n    Optional<User> findByEmail(@Param("email") String email);\n}\n```\n\nSpring Boot 애플리케이션 예시:\n```java\n@SpringBootApplication\npublic class MyApplication {\n    public static void main(String[] args) {\n        SpringApplication.run(MyApplication.class, args);\n    }\n}\n```',
+    relatedKeywords: ['IoC', 'DI', 'AOP', 'Spring Boot', 'Spring MVC', 'Spring Data', 'Bean', 'Spring Security']
+  },
+  {
+    keyword: 'REST API',
+    description: 'REST API(Representational State Transfer API)는 HTTP 프로토콜을 기반으로 하는 웹 서비스 아키텍처 스타일입니다. 자원(Resource)을 URI로 표현하고, HTTP 메서드(GET, POST, PUT, DELETE 등)를 통해 자원에 대한 CRUD 작업을 수행합니다. 상태를 유지하지 않는(Stateless) 특성을 가지며, 클라이언트와 서버 간의 느슨한 결합을 지향합니다.',
+    example: 'REST API 설계 원칙:\n1. 자원 식별(Resource Identification): URI를 통해 자원 식별\n   - 좋은 예: /users/123\n   - 나쁜 예: /getUser?id=123\n\n2. HTTP 메서드 활용:\n   - GET: 자원 조회 (읽기 전용)\n   - POST: 새 자원 생성\n   - PUT: 자원 수정 (전체 교체)\n   - PATCH: 자원 부분 수정\n   - DELETE: 자원 삭제\n\n3. 응답 상태 코드 활용:\n   - 200 OK: 요청 성공\n   - 201 Created: 자원 생성 성공\n   - 400 Bad Request: 잘못된 요청\n   - 401 Unauthorized: 인증 필요\n   - 403 Forbidden: 권한 없음\n   - 404 Not Found: 자원 없음\n   - 500 Internal Server Error: 서버 오류\n\nREST API 예시 (사용자 관리):\n\n```\n# 사용자 목록 조회\nGET /api/users\n\n# 특정 사용자 조회\nGET /api/users/123\n\n# 새 사용자 생성\nPOST /api/users\nContent-Type: application/json\n\n{\n  "name": "홍길동",\n  "email": "hong@example.com",\n  "role": "user"\n}\n\n# 사용자 정보 수정\nPUT /api/users/123\nContent-Type: application/json\n\n{\n  "name": "홍길동",\n  "email": "hong@example.com",\n  "role": "admin"\n}\n\n# 사용자 삭제\nDELETE /api/users/123\n```\n\nREST API 응답 예시:\n```json\n{\n  "id": 123,\n  "name": "홍길동",\n  "email": "hong@example.com",\n  "role": "user",\n  "created_at": "2023-01-15T09:30:00Z",\n  "links": [\n    {\n      "rel": "self",\n      "href": "/api/users/123"\n    },\n    {\n      "rel": "posts",\n      "href": "/api/users/123/posts"\n    }\n  ]\n}\n```',
+    relatedKeywords: ['HTTP', 'URI', 'CRUD', 'JSON', 'Stateless', 'API', 'HATEOAS', 'Richardson 성숙도 모델']
+  },
+  {
+    keyword: 'Docker',
+    description: 'Docker는 애플리케이션을 컨테이너로 패키징하여 개발, 배포, 실행하는 오픈 소스 플랫폼입니다. 컨테이너는 코드, 런타임, 시스템 도구, 라이브러리 등 애플리케이션 실행에 필요한 모든 것을 포함하는 가벼운 실행 환경으로, 어디서나 동일하게 실행될 수 있습니다.',
+    example: 'Docker 핵심 개념:\n\n1. Dockerfile 예시 (Node.js 애플리케이션):\n```dockerfile\n# 베이스 이미지 설정\nFROM node:14-alpine\n\n# 작업 디렉토리 설정\nWORKDIR /app\n\n# 의존성 파일 복사 및 설치\nCOPY package*.json ./\nRUN npm install\n\n# 애플리케이션 소스 복사\nCOPY . .\n\n# 애플리케이션 빌드\nRUN npm run build\n\n# 포트 노출\nEXPOSE 3000\n\n# 컨테이너 실행 명령\nCMD ["npm", "start"]\n```\n\n2. Docker 이미지 빌드 및 실행:\n```bash\n# 이미지 빌드\ndocker build -t myapp:1.0 .\n\n# 컨테이너 실행\ndocker run -d -p 3000:3000 --name myapp-container myapp:1.0\n\n# 컨테이너 목록 확인\ndocker ps\n\n# 컨테이너 로그 확인\ndocker logs myapp-container\n\n# 컨테이너 중지 및 삭제\ndocker stop myapp-container\ndocker rm myapp-container\n```\n\n3. Docker Compose 예시 (다중 서비스):\n```yaml\n# docker-compose.yml\nversion: "3"\n\nservices:\n  web:\n    build: ./web\n    ports:\n      - "3000:3000"\n    depends_on:\n      - db\n    environment:\n      - DATABASE_URL=postgres://postgres:password@db:5432/mydb\n\n  db:\n    image: postgres:13\n    volumes:\n      - db-data:/var/lib/postgresql/data\n    environment:\n      - POSTGRES_PASSWORD=password\n      - POSTGRES_DB=mydb\n\nvolumes:\n  db-data:\n```\n\nDocker 주요 이점:\n- 일관된 환경: "내 컴퓨터에서는 작동합니다" 문제 해결\n- 격리: 다른 애플리케이션과 의존성 충돌 방지\n- 효율성: 가상 머신보다 가볍고 빠름\n- 확장성: 손쉬운 스케일 업/다운\n- 버전 관리: 이미지 태그를 통한 버전 관리\n- 재사용성: 이미지를 통한 환경 재사용',
+    relatedKeywords: ['컨테이너화', 'Dockerfile', 'Docker Compose', '이미지', '컨테이너', '마이크로서비스', '쿠버네티스', 'DevOps']
+  },
+  {
+    keyword: '쿠버네티스',
+    description: '쿠버네티스(Kubernetes)는 컨테이너화된 애플리케이션의 자동 배포, 스케일링, 관리를 위한 오픈 소스 컨테이너 오케스트레이션 플랫폼입니다. Google에서 개발한 이 시스템은 컨테이너 그룹(Pod)을 관리하고, 부하 분산, 자동 복구, 롤링 업데이트 등의 기능을 제공합니다.',
+    example: '쿠버네티스 핵심 개념:\n\n1. Pod 정의 예시 (YAML):\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: my-app-pod\n  labels:\n    app: my-app\nspec:\n  containers:\n  - name: my-app-container\n    image: my-app:1.0\n    ports:\n    - containerPort: 8080\n    resources:\n      limits:\n        memory: "256Mi"\n        cpu: "500m"\n```\n\n2. Deployment 정의 예시:\n```yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app-deployment\n  labels:\n    app: my-app\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: my-app\n  template:\n    metadata:\n      labels:\n        app: my-app\n    spec:\n      containers:\n      - name: my-app-container\n        image: my-app:1.0\n        ports:\n        - containerPort: 8080\n```\n\n3. Service 정의 예시:\n```yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: my-app-service\nspec:\n  selector:\n    app: my-app\n  ports:\n  - port: 80\n    targetPort: 8080\n  type: LoadBalancer\n```\n\n쿠버네티스 아키텍처 구성요소:\n1. 마스터 컴포넌트:\n   - API 서버: 쿠버네티스 API 제공\n   - etcd: 클러스터 데이터 저장소\n   - 스케줄러: 파드 배치 결정\n   - 컨트롤러 매니저: 복제, 배포 제어\n\n2. 노드 컴포넌트:\n   - kubelet: 노드의 에이전트\n   - kube-proxy: 네트워크 프록시\n   - 컨테이너 런타임: Docker, containerd 등\n\n쿠버네티스 리소스 유형:\n- Pod: 최소 배포 단위, 하나 이상의 컨테이너 그룹\n- ReplicaSet: Pod 복제본 관리\n- Deployment: 선언적 업데이트 관리\n- Service: 파드 집합에 네트워크 연결성 제공\n- ConfigMap/Secret: 설정 관리\n- PersistentVolume: 데이터 저장\n- Namespace: 클러스터 가상 분할',
+    relatedKeywords: ['컨테이너 오케스트레이션', 'Docker', '마이크로서비스', 'Pod', 'Deployment', 'Service', 'kubectl', 'Helm']
   }
 ];
 

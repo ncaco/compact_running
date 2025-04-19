@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/canvas-confetti": "^1.9.0",
     "@types/classnames": "^2.3.0",
+    "axios": "^1.8.4",
     "canvas-confetti": "^1.9.3",
     "classnames": "^2.5.1",
     "lottie-web": "^5.12.2",
