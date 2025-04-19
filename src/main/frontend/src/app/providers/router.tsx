@@ -1,6 +1,7 @@
 import { ButtonExamplePage } from '@pages/button-example'
 import { HomePage } from '@pages/home'
 import { StudyPage } from '@pages/study'
+import { KeywordPage } from '@pages/keyword'
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
 
 export const Router = () => {
@@ -13,6 +14,7 @@ export const Router = () => {
             <NavLink to="/" className={({isActive}) => isActive ? "nav-link active" : "nav-link"} end>홈</NavLink>
             <NavLink to="/buttons" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>버튼 예제</NavLink>
             <NavLink to="/study" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>정보처리기사 학습</NavLink>
+            <NavLink to="/keyword" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>핵심 키워드</NavLink>
           </div>
         </nav>
         <main className="app-content">
@@ -20,6 +22,7 @@ export const Router = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/buttons" element={<ButtonExamplePage />} />
             <Route path="/study" element={<StudyPage />} />
+            <Route path="/keyword" element={<KeywordPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         </main>
