@@ -115,7 +115,7 @@
   80% {
     opacity: 0.8;
   }
-  100% { 
+  100% {
     transform: translateY(500px);
     opacity: 0;
   }

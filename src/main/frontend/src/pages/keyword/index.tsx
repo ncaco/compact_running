@@ -1,20 +1,7 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { KeywordCategory } from './types';
 import { findKeywordDescription } from './keywordDescriptions';
 import './styles.css';
-
-interface KeywordCategory {
-  id: string;
-  name: string;
-  keywords: string[];
-}
-
-// 키워드 설명 데이터 타입
-interface KeywordDescription {
-  keyword: string;
-  description: string;
-  example?: string;
-  relatedKeywords?: string[];
-}
 
 // 키워드 데이터 - 실제 정보처리기사 실기 시험 관련 키워드들
 const KEYWORD_DATA: KeywordCategory[] = [
@@ -232,46 +219,26 @@ const KEYWORD_DATA: KeywordCategory[] = [
 
 export const KeywordPage: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const [activeCategoryId, setActiveCategoryId] = useState<string>('database');
-  const [selectedKeyword, setSelectedKeyword] = useState<KeywordDescription | null>(null);
-  const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [activeCategory, setActiveCategory] = useState<number>(0);
+  const [selectedKeyword, setSelectedKeyword] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const detailPanelRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   
-  // ESC 키 눌렀을 때 상세 설명 패널 닫기
-  useEffect(() => {
-    const handleEscKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isDetailOpen) {
-        closeDetail();
-      }
-    };
-    
-    window.addEventListener('keydown', handleEscKey);
-    
-    return () => {
-      window.removeEventListener('keydown', handleEscKey);
-    };
-  }, [isDetailOpen]);
-  
-  // 바탕화면 클릭 시 상세 설명 패널 닫기
-  useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (isDetailOpen && detailPanelRef.current && !detailPanelRef.current.contains(e.target as Node)) {
-        // 클릭된 요소가 키워드 카드가 아닌 경우에만 닫기
-        const keywordCard = (e.target as Element).closest('.keyword-card');
-        if (!keywordCard) {
-          closeDetail();
-        }
-      }
-    };
-    
-    document.addEventListener('mousedown', handleOutsideClick);
-    
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [isDetailOpen]);
+  const handleEscKey = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeDetail();
+    }
+  }, []);
+
+  const handleOutsideClick = useCallback((e: MouseEvent) => {
+    if (detailPanelRef.current && !detailPanelRef.current.contains(e.target as Node)) {
+      closeDetail();
+    }
+  }, []);
   
   // 스크롤 핸들러
   const handleScroll = () => {
@@ -285,7 +252,7 @@ export const KeywordPage: React.FC = () => {
         categories.forEach((category) => {
           const rect = category.getBoundingClientRect();
           if (rect.top <= 200 && rect.bottom >= 200) {
-            setActiveCategoryId((category as HTMLElement).id);
+            setActiveCategory(Number((category as HTMLElement).id));
           }
         });
       }
@@ -294,7 +261,7 @@ export const KeywordPage: React.FC = () => {
 
   // 카테고리로 스크롤
   const scrollToCategory = (categoryId: string) => {
-    setActiveCategoryId(categoryId);
+    setActiveCategory(Number(categoryId));
     const element = document.getElementById(categoryId);
     if (element && containerRef.current) {
       containerRef.current.scrollTo({
@@ -306,15 +273,23 @@ export const KeywordPage: React.FC = () => {
   
   // 키워드 클릭 핸들러
   const handleKeywordClick = (keyword: string) => {
-    // 키워드에 대한 설명 데이터 찾기
+    setSelectedKeyword(keyword);
     const description = findKeywordDescription(keyword);
-    setSelectedKeyword(description);
-    setIsDetailOpen(true);
+    if (description) {
+      const detailPanel = document.querySelector('.detail-panel') as HTMLElement;
+      if (detailPanel) {
+        detailPanel.classList.add('open');
+      }
+    }
   };
   
   // 설명 패널 닫기
   const closeDetail = () => {
-    setIsDetailOpen(false);
+    setSelectedKeyword(null);
+    const detailPanel = document.querySelector('.detail-panel') as HTMLElement;
+    if (detailPanel) {
+      detailPanel.classList.remove('open');
+    }
   };
 
   // 관련 키워드 클릭 핸들러
@@ -322,32 +297,60 @@ export const KeywordPage: React.FC = () => {
     handleKeywordClick(keyword);
   };
 
-  // 키워드 필터링 기능
-  const filteredKeywordData = useMemo(() => {
-    if (!searchTerm.trim()) return KEYWORD_DATA;
+  // 검색 기능 처리
+  const handleSearch = useCallback((query: string) => {
+    setSearchQuery(query);
     
-    return KEYWORD_DATA.map(category => ({
-      ...category,
-      keywords: category.keywords.filter(keyword => 
-        keyword.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    })).filter(category => category.keywords.length > 0);
-  }, [searchTerm]);
+    if (!query.trim()) {
+      setSearchResults([]);
+      setIsSearching(false);
+      return;
+    }
+    
+    setIsSearching(true);
+    
+    // 모든 카테고리에서 키워드 검색
+    const results: string[] = [];
+    KEYWORD_DATA.forEach(category => {
+      category.keywords.forEach(keyword => {
+        if (keyword.toLowerCase().includes(query.toLowerCase())) {
+          results.push(keyword);
+        }
+      });
+    });
+    
+    setSearchResults(results);
+  }, []);
   
-  // 검색어 변경 핸들러
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
+  const handleClearSearch = useCallback(() => {
+    setSearchQuery('');
+    setSearchResults([]);
+    setIsSearching(false);
+  }, []);
   
-  // 검색창 초기화
-  const clearSearch = () => {
-    setSearchTerm('');
-  };
+  const handleKeywordSelect = useCallback((keyword: string) => {
+    setSelectedKeyword(keyword);
+    const description = findKeywordDescription(keyword);
+    if (description) {
+      const detailPanel = document.querySelector('.detail-panel') as HTMLElement;
+      if (detailPanel) {
+        detailPanel.classList.add('open');
+      }
+    }
+  }, []);
 
-  // 검색 결과 개수 계산
-  const totalResults = useMemo(() => {
-    return filteredKeywordData.reduce((acc, category) => acc + category.keywords.length, 0);
-  }, [filteredKeywordData]);
+  useEffect(() => {
+    window.addEventListener('keydown', handleEscKey);
+    if (selectedKeyword) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+    
+    return () => {
+      window.removeEventListener('keydown', handleEscKey);
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.body.classList.remove('detail-open');
+    };
+  }, [handleEscKey, handleOutsideClick, selectedKeyword]);
 
   return (
     <div className="keyword-page-layout">
@@ -356,12 +359,13 @@ export const KeywordPage: React.FC = () => {
           <input 
             type="text"
             placeholder="키워드 검색..."
-            value={searchTerm}
-            onChange={handleSearchChange}
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
             className="keyword-search-input"
+            ref={searchInputRef}
           />
-          {searchTerm && (
-            <button className="clear-search-button" onClick={clearSearch}>
+          {searchQuery && (
+            <button className="clear-search-button" onClick={handleClearSearch}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
               </svg>
@@ -372,10 +376,10 @@ export const KeywordPage: React.FC = () => {
           <h3>카테고리</h3>
         </div>
         <ul className="category-navigation-vertical">
-          {filteredKeywordData.map(category => (
+          {KEYWORD_DATA.map((category, index) => (
             <li key={category.id}>
               <button 
-                className={`category-link-vertical ${activeCategoryId === category.id ? 'active' : ''}`}
+                className={`category-link-vertical ${activeCategory === index ? 'active' : ''}`}
                 onClick={() => scrollToCategory(category.id)}
               >
                 {category.name}
@@ -389,16 +393,51 @@ export const KeywordPage: React.FC = () => {
       <div className="keyword-page" ref={containerRef} onScroll={handleScroll}>
         <div className={`keyword-header ${isScrolled ? 'hidden' : ''}`}>
           <h1>핵심 키워드</h1>
-          {searchTerm && (
+          {searchQuery && (
             <div className="search-info">
-              "{searchTerm}" 검색 결과: {totalResults}개 키워드
+              {searchResults.length > 0 ? (
+                <p>
+                  <strong>{searchResults.length}개</strong>의 키워드가 검색되었습니다.
+                </p>
+              ) : (
+                <p className="no-results">
+                  검색 결과가 없습니다.
+                  <button className="reset-search" onClick={handleClearSearch}>검색 초기화</button>
+                </p>
+              )}
             </div>
           )}
         </div>
         
         <div className="keyword-categories">
-          {filteredKeywordData.length > 0 ? (
-            filteredKeywordData.map(category => (
+          {isSearching ? (
+            <div className="search-results">
+              {searchResults.length > 0 ? (
+                <>
+                  <p className="search-info">{searchResults.length}개의 검색 결과</p>
+                  <ul className="keyword-list">
+                    {searchResults.map((keyword, idx) => (
+                      <li
+                        key={`search-result-${idx}`}
+                        className={selectedKeyword === keyword ? 'active' : ''}
+                        onClick={() => handleKeywordSelect(keyword)}
+                      >
+                        {keyword}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <div className="no-results">
+                  <p>검색 결과가 없습니다.</p>
+                  <button className="reset-search" onClick={handleClearSearch}>
+                    모든 키워드 보기
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            KEYWORD_DATA.map((category) => (
               <div key={category.id} id={category.id} className="keyword-category-section">
                 <h2 className="category-title">
                   {category.name}
@@ -419,11 +458,6 @@ export const KeywordPage: React.FC = () => {
                 </div>
               </div>
             ))
-          ) : (
-            <div className="no-results">
-              <p>"{searchTerm}"에 대한 검색 결과가 없습니다.</p>
-              <button className="reset-search" onClick={clearSearch}>검색 초기화</button>
-            </div>
           )}
         </div>
         
@@ -441,7 +475,7 @@ export const KeywordPage: React.FC = () => {
       
       {/* 키워드 설명 슬라이드 패널 */}
       <div 
-        className={`detail-panel ${isDetailOpen ? 'open' : ''}`}
+        className={`detail-panel ${selectedKeyword ? 'open' : ''}`}
         ref={detailPanelRef}
       >
         <button className="close-detail" onClick={closeDetail}>
@@ -451,23 +485,23 @@ export const KeywordPage: React.FC = () => {
         </button>
         {selectedKeyword && (
           <div className="detail-content">
-            <h2>{selectedKeyword.keyword}</h2>
-            <p className="detail-description">{selectedKeyword.description}</p>
+            <h2>{selectedKeyword}</h2>
+            <p className="detail-description">{findKeywordDescription(selectedKeyword)?.description || '설명이 없습니다.'}</p>
             
-            {selectedKeyword.example && (
+            {findKeywordDescription(selectedKeyword)?.example && (
               <div className="detail-example">
                 <h3>예시</h3>
-                <pre>{selectedKeyword.example}</pre>
+                <pre>{findKeywordDescription(selectedKeyword)?.example}</pre>
               </div>
             )}
             
-            {selectedKeyword.relatedKeywords && selectedKeyword.relatedKeywords.length > 0 && (
+            {findKeywordDescription(selectedKeyword)?.relatedKeywords && (
               <div className="detail-related">
                 <h3>관련 키워드</h3>
                 <div className="related-tags">
-                  {selectedKeyword.relatedKeywords.map((related, idx) => (
+                  {findKeywordDescription(selectedKeyword)?.relatedKeywords?.map((related, idx) => (
                     <span 
-                      key={idx} 
+                      key={`related-${idx}`} 
                       className="related-tag"
                       onClick={() => handleRelatedKeywordClick(related)}
                     >
